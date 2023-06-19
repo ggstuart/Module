@@ -1,0 +1,15 @@
+{{define "bodyAttributes"}} class="hero"{{end}}
+
+{{ define "main" }}
+    <h2>{{.Title}}</h2>
+    {{ .Content }}
+
+    {{ range (.GetPage "weeks").Pages}}
+        {{.Render "overview"}}
+    {{ end }}    
+{{ end }}
+
+
+{{ define "footer" }}
+    Put some details here (fat footer?)
+{{ end }}

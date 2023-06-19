@@ -1,0 +1,14 @@
+{{ define "main" }}
+    {{partial "logo.html" .}}
+    {{ if .Param "display_toc" }}
+        <h2>Table of contents</h2>
+        {{ .TableOfContents }}
+    {{ end }}
+    <h2>{{.Title}}</h2>
+    {{ .Content }}
+{{ end }}
+
+{{ define "footer" }}
+    using proper exercise template
+{{ end }}
+

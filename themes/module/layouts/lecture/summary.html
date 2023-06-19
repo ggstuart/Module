@@ -1,0 +1,13 @@
+<article class="slide">
+    <a href="{{.RelPermalink}}">    
+        <h3>{{ .Title }}</h3>
+        {{partial "logo.html"}}
+        <p>
+            {{ .Summary }}
+        </p>
+        <small>
+            {{ dateFormat "Monday, Jan 2, 2006" .Date }}
+        </small>
+    </a>
+</article>
+

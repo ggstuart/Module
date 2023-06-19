@@ -1,0 +1,5 @@
+<section class="mainmenu wider grid">
+    {{ range .Page.CurrentSection.Sections}}
+    {{ .Render "summary"}}
+    {{ end }}
+</section>

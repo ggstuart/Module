@@ -1,0 +1,10 @@
+{{ with .Site.GetPage (.Get `page`) }}
+<article class="summary">
+    <a href="{{.RelPermalink}}">
+        <h3>{{ .Title }}</h3>
+    </a>
+    <p>
+        {{ .Summary }}
+    </p>
+</article>
+{{end}}

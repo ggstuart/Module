@@ -1,0 +1,18 @@
+<h2>Week {{.Params.Week}}: {{.Title}}</h2>
+{{ .Summary }}
+
+{{$thisWeek := .Params.Week}}
+<h3 id="lectures-heading">Lectures</h3>
+<section class="grid wider" aria-labelled-by="lectures-heading">
+    {{ range where (.GetPage "/lectures").Pages "Params.Week" $thisWeek }}
+        {{.Render "summary"}}
+    {{ end }}
+</section>
+
+<h3 id="exercises-heading">Exercises</h3>
+<section class="grid wider" aria-labelledby="exercises-heading">
+    {{ range where (.GetPage "/exercises").Pages "Params.Week" $thisWeek }}
+        {{.Render "summary"}}
+    {{end}}
+</section>
+

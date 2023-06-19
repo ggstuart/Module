@@ -1,0 +1,6 @@
+<nav aria-label="breadcrumb" class="breadcrumbs">
+    {{ range .Ancestors.Reverse }}
+            <a href="{{ .Permalink }}">{{ .Title | lower}}</a>
+    {{ end }}
+    {{/*  <a aria-current="page" class="active" href="{{ .Permalink }}">{{ .LinkTitle | lower }}</a>  */}}
+</nav>

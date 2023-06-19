@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{.Site.LanguageCode}}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+    {{ block "title" . }}
+        {{ .Site.Params.ModuleCode }}: {{ .Site.Params.ModuleName }}
+        {{if .Site.Title }} &ndash; {{ .Site.Title }}{{ end }}
+    {{ end }}
+    </title>
+    <link rel="stylesheet" href="/css/onedark.css">
+    <link rel="stylesheet" href="/css/style.css">
+    {{ block "css" . }}{{end}}
+    {{ range .Resources.Match "*.css" }}
+        <link rel="stylesheet" href="{{.RelPermalink}}">
+    {{ end }}
+    {{ block "javascript" . }}{{end}}
+</head>
+<body{{ block "bodyAttributes" . }}{{end}}>
+    <header>
+        <a href="/">
+{{ partial "logo.html" .}}
+        </a>
+        <h1>
+            <span class="optional with-colon">{{ .Site.Params.ModuleCode }}</span>
+            {{ .Site.Params.ModuleName }}
+        </h1>
+        <nav>
+            <label for="toggler" aria-label="menu toggler"></label>
+            <input id="toggler" type="checkbox" aria-label="menu toggler">
+            <a href="/index.html">Home</a>
+            {{range .CurrentSection.RegularPages}}
+            <a href="{{.RelPermalink}}">{{.Title}}</a>            
+            {{end}}
+        </nav>
+    </header>
+    {{ partial "breadcrumbs.html" .}}
+    <main{{ if .Draft }} class="draft"{{ end}}>
+        {{ block "main" .}}{{ end }}
+    </main>
+    <footer>
+        {{ block "footer" .}}
+        <p>This is the default footer</p>
+        {{ end }}
+    </footer>
+</body>
+</html>

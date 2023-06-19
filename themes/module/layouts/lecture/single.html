@@ -1,0 +1,29 @@
+{{define "css"}}
+<link rel="stylesheet" href="/css/presentation.css">
+{{end}}
+
+{{define "javascript"}}
+<script src="/js/presentation.js" type="module"></script>
+{{end}}
+
+{{define "bodyAttributes"}} class="presentation"{{end}}
+
+{{ define "main" }}
+  <article class="slide current">
+    <h2>{{.Title}}</h2>
+    {{partial "logo.html" .}}
+    {{ .Content }}
+  </article>
+  {{ $slides := .Resources.Match "*.md" }}
+  {{ range sort $slides "Params.Order" "asc" }}
+  <article class="slide {{ delimit .Params.Classes " " }}">
+    <h2>{{.Title}}</h2>    
+    {{ .Content }}
+  </article>
+  {{ end }}
+
+{{ end }}
+
+{{ define "footer" }}
+  <small id="instructions">Use arrow keys or swipe left and right to navigate</small>
+{{ end }}

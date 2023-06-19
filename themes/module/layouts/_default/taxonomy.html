@@ -1,0 +1,17 @@
+{{ define "main" }}
+
+    {{ .Content }}
+    <ul class="contents">
+        {{ range .Paginator.Pages }}
+            <li>
+                <h2>{{ .Title }}</h2>
+                {{ .Render "summary" }}
+            </li>
+        {{ end }}
+    </ul>
+    {{/*  {{ partial "pagination.html" . }}  */}}
+{{ end }}
+
+{{ define "footer" }}
+    using section template
+{{ end }}

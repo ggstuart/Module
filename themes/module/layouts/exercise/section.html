@@ -1,0 +1,16 @@
+{{ define "main" }}
+    <h2>{{.Title}}</h2>
+    {{ .Content }}
+    {{ range .Pages.GroupByParam "Week" }}
+        <h3>Week {{.Key}}</h3>
+        <section class="grid">
+            {{range .Pages.ByParam "order"}}
+            {{.Render "summary"}}
+            {{end}}
+        </section>
+    {{ end }}
+{{ end }}
+
+{{ define "footer" }}
+    using section template
+{{ end }}
