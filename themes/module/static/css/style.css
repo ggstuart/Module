@@ -15,6 +15,7 @@
     --clr-accent2: #E34F26;
     --global-padding: 0.5rem;
     --accent-gradient: linear-gradient(45deg, var(--clr-accent), 70%, var(--clr-accent2));
+    --button-gradient: linear-gradient(45deg, var(--clr-primary-button), 70%, var(--clr-secondary-button));
     --background-gradient: linear-gradient(180deg, var(--clr-background), 70%, var(--clr-background2));
 }
 @media (width >= 800px) {
@@ -41,7 +42,7 @@ nav#TableOfContents {
     padding: var(--global-padding);
 }
 
-header {
+header.main-header {
     display: grid;
     gap: 1rem;
     grid-template-columns: auto 1fr;
@@ -138,12 +139,12 @@ header nav h2 {
 
 header nav a {
     padding: 0.25em 0.5em;
-    background: linear-gradient(var(--clr-primary-button), var(--clr-secondary-button));
+    background: var(--button-gradient);
     text-decoration: none;
 }
 
 @media (width>=1000px) {
-    header {
+    header.main-header {
         padding: var(--global-padding) calc(calc(50% - 500px)  + var(--global-padding));
     }
     nav.breadcrumbs {
@@ -167,6 +168,7 @@ header nav label {
     gap: calc(var(--button-size) * 0.15);
     padding: calc(var(--button-size) * 0.3) calc(var(--button-size) * 0.2);
     background: var(--accent-gradient);
+    border: 0.5px solid var(--clr-accent2);
     border-radius: 3px;
     z-index: 11;
     transition: left 0.5s;
@@ -284,25 +286,42 @@ pre {
     grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
 }
 
-ul.contents {
+ul {
     padding: 0;
+    list-style: inside;
+}
+li {
+    padding: 0.25rem 0;
+}
+
+ul.contents {
     list-style: none;
 }
 #TableOfContents {
-    background: var(--accent-gradient);
-    border-radius: 3px;
-}
-#TableOfContents ul {
+    backdrop-filter: brightness(0.2);
+    border-radius: 1rem;
     padding: 0;
+    border: 1px solid var(--clr-accent);
+    /* background: var(--accent-gradient) */
 }
-#TableOfContents li {
-    margin: 0;
-    background: var(--clr-accent);
-    padding: 0.25rem 0;
+
+#TableOfContents ul {
+    padding-left: 1rem;
     list-style-position: inside;
 }
-#TableOfContents > ul > li::marker {
-    content: "- "
+#TableOfContents li {
+    filter: brightness(0.9);
+    padding: 0.25rem 0;
+}
+#TableOfContents li::marker {
+    /* content: "↣ " */
+    content: "↪ ";
+    color: var(--clr-accent);
+}
+
+#TableOfContents li:hover::marker {
+    /* content: "⇒ "; */
+    color: var(--clr-accent2);
 }
 
 #TableOfContents li:hover {
@@ -344,9 +363,60 @@ img.logo {
     rotate: 0.125turn;
 }
 
+button {
+    background: var(--button-gradient);
+    color: inherit;
+    padding: 0.25rem 0.5rem;
+    transition: filter 0.6s, scale 250ms;
+    filter: brightness(0.5);
+}
+button:hover {
+    filter: brightness(1);
+}
+button.clicked {
+    filter: brightness(1.5);
+    scale: 1.2;
+}
+
+code {
+    font-family: "Ubuntu Mono";
+}
 .chroma {
     padding: 1rem;
-    font-family: "Ubuntu Mono";
+    border: 0.25rem solid white;
+    margin: 0;
+}
+
+.chroma + button {
+    margin-top: 0.25rem;
+    border-radius: 1em;
+    border: 1.5px solid white;
+}
+pre:has(code) {
+    position: relative;
+    z-index: 0;
+}
+pre:has(code)::before {
+    content: "";
+    opacity: 0.4;
+    background-repeat: no-repeat;
+    background-position: top 0.5rem right 0.5rem;
+    background-size: 2em;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background-blend-mode: luminosity;
+}
+
+pre:has(code.language-css)::before {
+    background-image: url(/images/css3_badge.svg);
+}
+pre:has(code.language-html)::before {
+    background-image: url(/images/html5_badge.svg);
+}
+pre:has(code.language-js)::before {
+    background-image: url(/images/javascript_badge.svg);
 }
 
 
