@@ -1,9 +1,10 @@
-<article class="summary">
+<article class="summary {{.Type}}">
     <a href="{{.RelPermalink}}">    
-        <h3>{{ .Title }}</h3>
+        <h3>{{.Type | title}}: {{ .Title }}</h3>
+        <p>{{ .Summary }}</p>
+        <footer>
+            <small>{{ .Date.Format "Monday" }}, {{ humanize .Date.Day }} of {{ .Date.Format "January 2006" }}</small>
+        </footer>
     </a>
-    <p>
-        {{ .Summary }}
-    </p>
 </article>
 
