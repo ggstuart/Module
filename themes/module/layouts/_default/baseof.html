@@ -24,8 +24,8 @@
 {{ partial "logo.html" .}}
         </a>
         <h1>
-            <span class="optional with-colon">{{ .Site.Params.ModuleCode }}</span>
-            {{ .Site.Params.ModuleName }}
+            <span class="with-colon module-code">{{ .Site.Params.ModuleCode }}</span>
+            <span class="module-name">{{ .Site.Params.ModuleName }}</span>
         </h1>
         <nav>
             <label for="toggler" aria-label="menu toggler"></label>
