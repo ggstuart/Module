@@ -131,6 +131,11 @@ header nav:has(input#toggler:checked) {
     translate: none;
 }
 
+header nav h2 {
+    margin: 0;
+    font-size: 0.9em;
+}
+
 header nav a {
     padding: 0.25em 0.5em;
     background: linear-gradient(var(--clr-primary-button), var(--clr-secondary-button));

@@ -30,9 +30,12 @@
         <nav>
             <label for="toggler" aria-label="menu toggler"></label>
             <input id="toggler" type="checkbox" aria-label="menu toggler">
-            <a href="/index.html">Home</a>
-            {{range .CurrentSection.RegularPages}}
-            <a href="{{.RelPermalink}}">{{.Title}}</a>            
+            {{$links := .CurrentSection.Pages | append (.GetPage "/") }}
+            {{range $links.GroupBy "Type"}}
+            <h2>{{.Key | pluralize}}</h2>
+            {{range .Pages}}
+                <a href="{{.RelPermalink}}">{{.Title}}</a>
+            {{end}}
             {{end}}
         </nav>
     </header>
