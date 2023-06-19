@@ -6,7 +6,7 @@
 :root {
     --clr-text: hsl(0, 70%, 95%);
     --clr-slide-text: hsl(0, 10%, 10%);
-    --clr-slide-background: hsl(180, 20%, 90%);
+    --clr-slide-background: hsl(180, 20%, 80%);
     --clr-background: hsl(0, 20%, 20%);
     --clr-background2: hsla(0, 20%, 30%);
     --clr-primary-button: #264DE4;
@@ -32,8 +32,8 @@ body {
     min-height: 100dvh;
 }
 
-header, 
-footer, 
+body > header, 
+body > footer, 
 blockquote, 
 article, 
 nav.breadcrumbs, 
@@ -61,20 +61,52 @@ body.hero header {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
-    padding-bottom: 2em;
+    padding: 2em;
+    min-height: 100dvh;
 }
-body.hero header h1 {
-    font-size: 2.5em;
+body.hero header h1 .module-code {
+    font-size: 2.9em;
 }
+
+body.hero h1 .module-code {
+    display: block;
+    font-weight: 600;
+}
+
+body.hero h1 .with-colon::after {
+    display: none;
+}
+
 body.hero header .logo {
-    /* font-size: 15em; */
     width: 100%;
     padding: 1em;
 }
 body.hero header a:has(.logo) {
     width: 100%;
 }
-
+body.hero header h1 .module-code {
+    text-shadow: 0 0 12px white;
+}
+@media (width>=350px) {
+    body.hero header h1 {
+        font-size: 1.3em;
+    }    
+}
+@media (width>=450px) {
+    body.hero header h1 {
+        font-size: 1.6em;
+    }    
+}
+@media (width>=650px) {
+    body.hero header h1 {
+        font-size: 2em;
+    }
+}
+@media (width>=650px) {
+    body.hero header h1 {
+        font-size: 3em;
+    }
+}
 
 
 /* Menu */
@@ -125,7 +157,6 @@ header nav label {
     /* left: var(--global-padding); */
     left: calc(-1 * calc(var(--global-padding) + var(--button-size)));
     width: var(--button-size);
-    aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
     gap: calc(var(--button-size) * 0.15);
@@ -192,10 +223,18 @@ main {
     max-width: 1000px;
     margin-inline: auto;
     padding-inline: var(--global-padding);
+    padding-block: 5em;
 }
 
 h1, h2, h3 {
     font-weight: 400;
+}
+
+h2.special {
+    font-size: 2em;
+    /* background: var(--clr-primary-button); */
+    padding: 5rem 0 .5rem;
+    border-bottom: 3px solid var(--clr-accent);
 }
 
 a {
@@ -366,21 +405,11 @@ article.summary.lecture {
 } 
 
 @media (width >= 600px) {
-    body {
+
+    main {
         font-size: 1.4em;
     }
     p {
         line-height: 1.4;
-    }
-    body.hero h1 .with-colon {
-        display: block;
-        font-size: 1.2em;
-        font-weight: 600;
-    }
-    
-    body.hero h1 .with-colon::after {
-        display: none;
-    }
-    
-    
+    }   
 }
