@@ -1,18 +1,11 @@
-<h2>Week {{.Params.Week}}: {{.Title}}</h2>
-{{ .Summary }}
+<h2 class="special">{{.Title}}</h2>
+{{ .Content }}
 
-{{$thisWeek := .Params.Week}}
-<h3 id="lectures-heading">Lectures</h3>
-<section class="grid wider" aria-labelled-by="lectures-heading">
-    {{ range where (.GetPage "/lectures").Pages "Params.Week" $thisWeek }}
-        {{.Render "summary"}}
-    {{ end }}
+{{ range .Pages.GroupBy "Type"}}
+<h2 id="{{.Key}}-heading">{{.Key | pluralize | title}}</h2>
+<section class="grid wider" aria-labelled-by="{{.Key}}-heading">
+{{ range sort .Pages "Params.Order" "asc"}}
+    {{.Render "summary"}}
+{{ end }}
 </section>
-
-<h3 id="exercises-heading">Exercises</h3>
-<section class="grid wider" aria-labelledby="exercises-heading">
-    {{ range where (.GetPage "/exercises").Pages "Params.Week" $thisWeek }}
-        {{.Render "summary"}}
-    {{end}}
-</section>
-
+{{ end }}
