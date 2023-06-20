@@ -1,7 +1,7 @@
 {{ define "main" }}
-    <h2>{{.Title}}</h2>
+    <h2 id="section-heading">{{.Title}}</h2>
     {{ .Content }}
-    <section class="grid wider">
+    <section class="grid wider" aria-labelledby="section-heading">
         {{ range (.Pages.ByParam "order") }}
         {{.Render "summary"}}
         {{ end }}
