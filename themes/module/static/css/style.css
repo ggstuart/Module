@@ -17,6 +17,8 @@
     --accent-gradient: linear-gradient(45deg, var(--clr-accent), 70%, var(--clr-accent2));
     --button-gradient: linear-gradient(45deg, var(--clr-primary-button), 70%, var(--clr-secondary-button));
     --background-gradient: linear-gradient(180deg, var(--clr-background), 70%, var(--clr-background2));
+    --main-width: 1000px;
+    --header-padding-inline: calc(calc(calc(100dvw - var(--main-width)) / 2) + var(--global-padding));
 }
 @media (width >= 800px) {
     :root {
@@ -37,7 +39,6 @@ body > header,
 body > footer, 
 blockquote, 
 article, 
-nav.breadcrumbs, 
 nav#TableOfContents {
     padding: var(--global-padding);
 }
@@ -49,6 +50,7 @@ header.main-header {
     overflow: auto;
     background: var(--background-gradient);
     margin-inline: auto;
+    padding: var(--global-padding) max(var(--global-padding), var(--header-padding-inline));
 }
 
 header h1 {
@@ -142,18 +144,10 @@ header nav a {
     background: var(--button-gradient);
     text-decoration: none;
 }
-
-@media (width>=1000px) {
-    header.main-header {
-        padding: var(--global-padding) calc(calc(50% - 500px)  + var(--global-padding));
-    }
-    nav.breadcrumbs {
-        padding: 0 calc(calc(50% - 500px)  + var(--global-padding));
-    }
-    header label {
-        /* right: calc(calc(50% - 500px) + var(--global-padding)); */
-    }
+nav.breadcrumbs {
+    padding: 0 max(var(--global-padding), var(--header-padding-inline));
 }
+
 
 /* THE TOGGLER LABEL */
 
@@ -227,7 +221,7 @@ body.hero nav.breadcrumbs {
 /* MAIN AND BELOW */
 
 main {
-    max-width: 1000px;
+    max-width: var(--main-width);
     margin-inline: auto;
     padding-inline: var(--global-padding);
     padding-block: 5em;
@@ -443,10 +437,10 @@ pre:has(code.language-js)::before {
 }
 
 
-
-
 article.summary {
+    position: relative;
     display: flex;
+    flex-direction: column;
     background: linear-gradient(145deg, var(--clr-primary-button), 80%, var(--clr-secondary-button));
     border-radius: 0 5px 5px 0;
     border: 1px solid var(--clr-secondary-button);
@@ -464,7 +458,12 @@ article.summary a {
     flex-direction: column;
     justify-content: space-between;
     text-decoration: none;
-    padding: var(--global-padding);
+    padding: 0.5rem;
+}
+article.summary img {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3
 }
 article.summary footer {
     display: flex;
