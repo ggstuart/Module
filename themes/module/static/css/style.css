@@ -275,6 +275,24 @@ pre {
     overflow-x: auto;
 }
 
+/* FIGURES */
+
+figure {
+    border: 0.25rem solid var(--clr-accent);
+    backdrop-filter: brightness(0.6);
+    border-radius: 0.5rem;
+    background-color: var(--clr-accent);
+    margin: 2em 0;
+}
+figure img {
+    border-radius: 0.5rem;
+    margin: 0;
+}
+figcaption p {
+    text-align: center;
+    margin: 0.25rem 0 0 0;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -340,6 +358,11 @@ ul.contents {
 
 .logo {
     max-width: 600px;
+    margin-inline: auto;
+    display: block;
+}
+img {
+    max-width: 100%;
     margin-inline: auto;
     display: block;
 }
