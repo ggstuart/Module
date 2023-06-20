@@ -4,13 +4,31 @@
 
 
 {{ define "main" }}
-    {{partial "logo.html" .}}
-    {{ if .Param "display_toc" }}
-        <h2>Table of contents</h2>
-        {{ .TableOfContents }}
-    {{ end }}
-    <h2>{{.Title}}</h2>
-    {{ .Content }}
+{{partial "logo.html" .}}
+<header class="exercise">
+    <h2 class="special">{{.Title}}</h2>
+    <div>
+        <span>{{.Date}}</span>
+    </div>
+</header>
+
+    <blockquote>
+        <p>
+            This is a lab exercise, it is designed to help you gain practical experience with web technologies.
+            Below you will find step-by-step instructions which you should follow as completely as possible.
+        </p>
+        <p>
+            We understand that different students have different levels of experience with these technologies.
+            As such, you may feel like you can skip this exercise. 
+        </p>
+        <p>
+            <strong>However</strong>, it is <em>critical</em> that you also elaborate on the instructions and deploy the learning you find here in your own example code. 
+        </p>
+    </blockquote>
+    {{ .TableOfContents }}
+    <section>
+        {{ .Content }}
+    </section>
 {{ end }}
 
 {{ define "footer" }}
