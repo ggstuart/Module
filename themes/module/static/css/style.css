@@ -438,7 +438,6 @@ pre:has(code.language-js)::before {
 
 
 article.summary {
-    position: relative;
     display: flex;
     flex-direction: column;
     background: linear-gradient(145deg, var(--clr-primary-button), 80%, var(--clr-secondary-button));
@@ -460,14 +459,12 @@ article.summary a {
     text-decoration: none;
     padding: 0.5rem;
 }
-article.summary img {
-    position: absolute;
-    inset: 0;
-    opacity: 0.3
-}
 article.summary footer {
     display: flex;
     justify-content: flex-end;
+}
+article.summary h3 {
+    margin-top: 0;
 }
 
 article.summary.lecture {
@@ -487,7 +484,6 @@ article.summary.lecture {
 
 .grid article.summary.lecture a {
     color: inherit;
-    /* display: block; */
 }
 
 
