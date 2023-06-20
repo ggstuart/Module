@@ -20,14 +20,14 @@
 </head>
 <body{{ block "bodyAttributes" . }}{{end}}>
     <header class="main-header">
-        <a href="/">
+        <a href="/" aria-label="home">
 {{ partial "logo.html" .}}
         </a>
         <h1>
             <span class="with-colon module-code">{{ .Site.Params.ModuleCode }}</span>
             <span class="module-name">{{ .Site.Params.ModuleName }}</span>
         </h1>
-        <nav>
+        <nav aria-label="main menu">
             <label for="toggler" aria-label="menu toggler"></label>
             <input id="toggler" type="checkbox" aria-label="menu toggler">
             {{$links := .CurrentSection.Pages | append (.GetPage "/") }}
