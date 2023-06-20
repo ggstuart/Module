@@ -1,4 +1,4 @@
-const codeElements = document.querySelectorAll('.chroma:has(code)');
+const codeElements = document.querySelectorAll('.chroma:has(code:is(.language-html, .language-css, .language-js))');
 
 for (const code of codeElements) {
     const btn = document.createElement("button");
