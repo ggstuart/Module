@@ -9,15 +9,15 @@
 {{define "bodyAttributes"}} class="presentation"{{end}}
 
 {{ define "main" }}
-  <article class="slide current">
+  <article class="slide current" aria-label="{{.Title}}">
     <h2>{{.Title}}</h2>
     {{partial "logo.html" .}}
     {{ .Content }}
   </article>
   {{ $slides := .Resources.Match "*.md" }}
   {{ range sort $slides "Params.Order" "asc" }}
-  <article class="slide {{ delimit .Params.Classes " " }}">
-    <h2>{{.Title}}</h2>    
+  <article class="slide {{ delimit .Params.Classes " " }}" aria-labelledby="slide-{{.Params.Order}}">
+    <h2 id="slide-{{.Params.Order}}">{{.Title}}</h2>    
     {{ .Content }}
   </article>
   {{ end }}
