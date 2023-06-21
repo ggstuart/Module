@@ -12,7 +12,8 @@
   <article class="slide current" aria-label="{{.Title}}">
     <h2>{{.Title}}</h2>
     {{partial "logo.html" .}}
-    {{ .Content }}
+    <p>{{ .Content }}</p>
+    {{ with .Params.Author}}<small>{{.}}</small>{{end}}
   </article>
   {{ $slides := .Resources.Match "slides/*.md" }}
   {{ range sort $slides "Params.Order" "asc" }}
