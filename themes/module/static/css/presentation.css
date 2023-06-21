@@ -85,16 +85,12 @@ article.slide>p {
 }
 
 article.slide blockquote {
-    backdrop-filter: blur(15px) brightness(1.5);
+    backdrop-filter: blur(15px) brightness(1.2);
     background: transparent;
     border: none;
 }
 article.slide > * {
     /* margin: 0; */
-}
-article.slide figure img {
-    aspect-ratio: 3/2;
-    object-fit: contain;
 }
 article.slide img {
     max-width: 100%;
@@ -103,15 +99,21 @@ article.slide img {
 }
 
 article.slide > figure {
+    border-radius: 0;
     border-color: var(--clr-slide-text);
-    border-width: 1px;
+    border-width: 0;
     background-color: var(--clr-slide-text);
     color: var(--clr-slide-background);
     margin: 0;
 }
-
+article.slide figure img {
+    background-color: var(--clr-slide-text);
+    display: block;
+    border-radius: 0;
+    object-fit: cover;
+}
 figure img {
-    border-radius: 0.5rem;
+    /* border-radius: 0.5rem; */
     margin: 0;
     background-color: white;
 }
