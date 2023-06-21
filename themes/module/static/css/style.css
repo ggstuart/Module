@@ -126,7 +126,7 @@ header nav {
     right: 0;
     translate: 100%;
     transition: translate 0.4s;
-    z-index: 10;
+    z-index: 100;
     backdrop-filter: brightness(0.7) blur(5px);
     padding: 4rem var(--global-padding);
 }

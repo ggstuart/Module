@@ -60,7 +60,7 @@ article.slide.next {
 article.slide.current {
     opacity: 1;
     translate: none;
-    z-index: 200;
+    z-index: 20;
 }
 
 article.slide a {
