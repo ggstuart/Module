@@ -280,6 +280,7 @@ figure {
 figure img {
     border-radius: 0.5rem;
     margin: 0;
+    background-color: white;
 }
 figcaption p {
     text-align: center;
