@@ -227,6 +227,7 @@ main {
 
 h1, h2, h3 {
     font-weight: 400;
+    text-wrap: balance;
 }
 
 h2.special {
@@ -254,10 +255,10 @@ blockquote {
     background: var(--accent-gradient);
     border-radius: 0 5px 5px 0;
     border-left: 5px solid var(--clr-accent2);
-}
-
-blockquote {
     margin: 3rem 0;
+}
+blockquote p {
+    text-wrap: balance;
 }
 
 pre {
