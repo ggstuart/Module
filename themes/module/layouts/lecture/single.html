@@ -14,7 +14,7 @@
     {{partial "logo.html" .}}
     {{ .Content }}
   </article>
-  {{ $slides := .Resources.Match "*.md" }}
+  {{ $slides := .Resources.Match "slides/*.md" }}
   {{ range sort $slides "Params.Order" "asc" }}
   <article class="slide {{ delimit .Params.Classes " " }}" aria-labelledby="slide-{{.Params.Order}}">
     <h2 id="slide-{{.Params.Order}}">{{.Title}}</h2>    
