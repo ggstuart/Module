@@ -144,9 +144,6 @@ header nav a {
     background: var(--button-gradient);
     text-decoration: none;
 }
-nav.breadcrumbs {
-    padding: 0 max(var(--global-padding), var(--header-padding-inline));
-}
 
 
 /* THE TOGGLER LABEL */
@@ -198,17 +195,18 @@ header input#toggler {
 nav.breadcrumbs {
     /* font-size: 0.8em; */
     display: flex;
-    overflow: hidden;
+    overflow-x: auto;
     /* --link-color: var(--clr-background); */
     /* background-color: var(--clr-accent); */
     /* background: var(--accent-gradient); */
+    padding: 0 max(var(--global-padding), var(--header-padding-inline));
 }
-
 nav.breadcrumbs a {
     text-decoration: none;
     color: var(--link-color);
     padding: 0.125em;
     border-radius: 3px;
+    flex-shrink: 0;
 }
 nav.breadcrumbs a:not(:last-child)::after {
     content: " >";
