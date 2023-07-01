@@ -18,7 +18,7 @@
   {{ $slides := .Resources.Match "slides/*.md" }}
   {{ range sort $slides "Params.Order" "asc" }}
   <article class="slide {{ delimit .Params.Classes " " }}" aria-labelledby="slide-{{.Params.Order}}">
-    <h2 id="slide-{{.Params.Order}}">{{.Title}}</h2>    
+    <h2 id="slide-{{.Params.Order}}">{{.Title}}</h2>
     {{ .Content }}
   </article>
   {{ end }}

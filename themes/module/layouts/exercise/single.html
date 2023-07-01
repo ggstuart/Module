@@ -24,6 +24,27 @@
 {{ end }}
 
 {{ define "footer" }}
-    using proper exercise template
 {{ end }}
 
+{{define "javascript"}}
+<script src="/js/exercise.js" type="module"></script>
+{{ if (.Page.Params.Mermaid) }}
+<script type="module">
+    // import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+        startOnLoad: true,
+        er: {
+            layoutDirection: 'LR',
+            fontSize: '1em'
+        },
+        theme: 'base',
+        themeVariables: {
+            primaryColor: "#EF652A"
+        }
+    });
+</script>
+{{ end }}
+
+
+{{end}}

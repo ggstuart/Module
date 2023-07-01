@@ -1,0 +1,12 @@
+<article class="summary {{.Type}}" aria-labelledby="{{.Title | urlize}}-heading">
+    <a href="{{.RelPermalink}}">    
+        <h3 id="{{.Title | urlize}}-heading">{{ .Title | title }}</h3>
+        <div>
+            {{ .Summary }}
+        </div>
+        <footer>
+            <small>{{.Type}}</small>
+        </footer>
+    </a>
+</article>
+

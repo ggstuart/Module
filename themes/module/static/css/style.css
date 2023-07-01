@@ -437,7 +437,10 @@ pre:has(code.language-html)::before {
 pre:has(code.language-js)::before {
     background-image: url(/images/javascript_badge.svg);
 }
-
+pre.mermaid {
+    /* background-color: white; */
+    padding: var(--global-padding); 
+}
 
 article.summary {
     display: flex;
