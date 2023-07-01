@@ -1,0 +1,25 @@
+{{ define "main" }}
+    <header class="unit">
+        {{ partial "logo.html"}}
+        <h2 id="unit-heading" class="special">Unit: {{.Title}}</h2>
+    </header>
+    {{ if .Param "display_toc" }}
+        {{ .TableOfContents }}
+    {{ end }}
+    <section aria-labelled-by="unit-heading">
+        {{ .Content }}
+    </section>
+
+    
+    <h2 class="special" id="pages-heading">In this unit</h2>
+    <section class="grid wider" aria-labelled-by="pages-heading">
+        {{range .Pages}}
+            {{.Render "summary"}}
+        {{ end }}
+    </section>
+
+{{ end }}
+
+{{ define "footer" }}
+    using proper unit template
+{{ end }}

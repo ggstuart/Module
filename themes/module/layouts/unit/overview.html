@@ -1,0 +1,13 @@
+<h2 class="special">
+    <a href="{{.RelPermalink}}">{{.Title}}</a>
+</h2>
+{{ .Summary }}
+
+{{ range .Pages.GroupBy "Type"}}
+<h2 id="{{.Key}}-heading">{{.Key | pluralize | title}}</h2>
+<section class="grid wider" aria-labelled-by="{{.Key}}-heading">
+{{ range sort .Pages "Params.Order" "asc"}}
+    {{.Render "summary"}}
+{{ end }}
+</section>
+{{ end }}

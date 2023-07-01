@@ -4,7 +4,7 @@
     <h2>{{.Title}}</h2>
     {{ .Content }}
 
-    {{ range where .Sections "Type" "week"}}
+    {{ range where .Sections "Type" "unit"}}
         {{.Render "overview"}}
     {{ end }}    
 {{ end }}
