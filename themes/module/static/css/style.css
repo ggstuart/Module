@@ -105,16 +105,19 @@ body.hero header h1 .module-code {
         font-size: 2em;
     }
 }
-@media (width>=650px) {
+@media (width>=750px) {
     body.hero header h1 {
         font-size: 3em;
     }
 }
 
+em {
+    font-weight: 400;
+}
 
 /* Menu */
 
-header nav {
+header.main-header nav {
     --button-size: 2rem;
     position: fixed;
     display: flex;
@@ -130,16 +133,16 @@ header nav {
     backdrop-filter: brightness(0.7) blur(5px);
     padding: 4rem var(--global-padding);
 }
-header nav:has(input#toggler:checked) {
+header.main-header nav:has(input#toggler:checked) {
     translate: none;
 }
 
-header nav h2 {
+header.main-header nav h2 {
     margin: 0;
     font-size: 0.9em;
 }
 
-header nav a {
+header.main-header nav a {
     padding: 0.25em 0.5em;
     background: var(--button-gradient);
     text-decoration: none;
@@ -148,7 +151,7 @@ header nav a {
 
 /* THE TOGGLER LABEL */
 
-header nav label {
+header.main-header nav label {
     position: absolute;
     top: var(--global-padding);
     /* left: var(--global-padding); */
@@ -164,10 +167,10 @@ header nav label {
     z-index: 11;
     transition: left 0.5s;
 }
-header:has(input#toggler:checked) label {
+header.main-header:has(input#toggler:checked) label {
     left: var(--global-padding);
 }
-header label::before, header label::after {
+header.main-header label::before, header label::after {
     content: "";
     background-color: white;
     border-radius: 2px;
@@ -176,16 +179,16 @@ header label::before, header label::after {
     transition: rotate 0.5s, translate 0.5s;
     transition-delay: 0.25s;
 }
-header:has(input#toggler:checked) label::before {
+header.main-header:has(input#toggler:checked) label::before {
     rotate: 45deg;
     translate: 0 0.25rem; 
 }
-header:has(input#toggler:checked) label::after {
+header.main-header:has(input#toggler:checked) label::after {
     rotate: 135deg;
     translate: 0 -0.25rem; 
 }
 
-header input#toggler {
+input#toggler {
     display: none;
 }
 
@@ -230,9 +233,8 @@ h1, h2, h3 {
     text-wrap: balance;
 }
 
-h2.special {
+.special {
     font-size: 2em;
-    /* background: var(--clr-primary-button); */
     padding: 5rem 0 .5rem;
     border-bottom: 3px solid var(--clr-accent);
 }
@@ -255,7 +257,7 @@ blockquote {
     background: var(--accent-gradient);
     border-radius: 0 5px 5px 0;
     border-left: 5px solid var(--clr-accent2);
-    margin: 3rem 0;
+    margin: 2rem 0;
 }
 blockquote p {
     text-wrap: balance;
@@ -458,6 +460,7 @@ article.summary a {
     justify-content: space-between;
     text-decoration: none;
     padding: 0.5rem;
+    flex-grow: 1;
 }
 article.summary footer {
     display: flex;
