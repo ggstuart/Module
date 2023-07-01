@@ -36,7 +36,6 @@ body {
 }
 
 body > header, 
-body > footer, 
 blockquote, 
 article, 
 nav#TableOfContents {
@@ -519,6 +518,34 @@ article.summary.lecture {
     color: inherit;
 }
 
+.pagination {
+    background: var(--accent-gradient);
+    padding: var(--global-padding);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.pagination a {
+    text-decoration: none;
+}
+a.prev, a.next {
+    flex-grow: 1;
+}
+a.next {
+    text-align: right;
+}
+a.prev::before,
+a.next::after {
+    line-height: 0;
+    font-size: 2em;
+}
+a.prev::before {
+    content: "←";
+}
+a.next::after {
+    content: "→";
+}
 
 @media (hover: hover) {
 

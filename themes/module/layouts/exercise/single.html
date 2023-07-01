@@ -1,7 +1,7 @@
 
 {{ define "main" }}
     <blockquote>
-{{partial "logo.html" .}}
+        {{partial "logo.html" .}}
         <p>
             This is a lab exercise, it is designed to help you gain practical experience with web technologies.
             Below you will find step-by-step instructions which you should follow as completely as possible.
@@ -10,6 +10,14 @@
             It is <strong>critical</strong> that you elaborate on the instructions and deploy the learning you find here in your own example code. 
         </p>
     </blockquote>
+    <nav class="pagination">
+        {{ with .CurrentSection.RegularPages.Next . }}
+        <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+        {{ with .CurrentSection.RegularPages.Prev . }}
+        <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+    </nav>
     <header class="exercise">
         <h2 class="special">{{.Title}}</h2>
         
@@ -24,6 +32,14 @@
 {{ end }}
 
 {{ define "footer" }}
+    <nav class="pagination">
+        {{ with .CurrentSection.RegularPages.Next . }}
+        <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+        {{ with .CurrentSection.RegularPages.Prev . }}
+        <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+    </nav>
 {{ end }}
 
 {{define "javascript"}}
