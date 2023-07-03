@@ -247,6 +247,10 @@ a:hover {
     filter: brightness(1.2) saturate(2);
 }
 
+h2.special a {
+    text-decoration: none;
+}
+
 p {
     line-height: 1.5;
 }
