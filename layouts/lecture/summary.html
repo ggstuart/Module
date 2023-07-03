@@ -1,17 +1,12 @@
-<article class="summary {{.Type}}">
-    <a href="{{.RelPermalink}}">    
-        <div>
-            <h3>{{ .Title }}</h3>
-            {{partial "logo.html"}}
-            <p>
-                {{ .Summary }}
-            </p>
+<article class="summary {{.Type}}" aria-labelledby="{{.Title | urlize}}-heading">
+    <a href="{{.RelPermalink}}">
+        <h3 id="{{.Title | urlize}}-heading">{{ .Title | title }}</h3>
+        {{partial "logo.html"}}
+        <div class="balanced">
+            <p>{{ .Summary }}</p>
         </div>
         <footer>
-            <small>
-                {{ .Date.Format "Monday" }}, {{ humanize .Date.Day }} of {{ .Date.Format "January 2006" }}
-            </small>
+            <small>{{.Type}}</small>
         </footer>
     </a>
 </article>
-
