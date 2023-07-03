@@ -1,6 +1,7 @@
 const slides = Array.from(document.querySelectorAll('.presentation .slide'));
 const firstSlide = document.querySelector(`.presentation .slide:first-of-type`);
 const lastSlide = document.querySelector(`.presentation .slide:last-of-type`);
+const progress = document.querySelector('#slide-progress div');
 
 const params = new URLSearchParams(document.location.search);
 const startSlideNumber = params.has('slide') ? params.get("slide") : 1;
@@ -23,6 +24,7 @@ function activateSlide(slide) {
     const prev = slide.previousElementSibling || document.querySelector('.presentation .slide:last-of-type');
     next.classList.add("next");
     prev.classList.add("prev");
+    progress.style.setProperty('--progress', `${slides.indexOf(slide) / (slides.length-1) * 100}%`);
 }
 
 function nextSlide() {

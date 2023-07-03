@@ -37,7 +37,7 @@ article.slide {
     max-width: 1200px;
     transition: opacity 750ms, translate 750ms;
     opacity: 0;
-    display: grid;
+    /* display: grid; */
     text-align: center;
     /* place-items: center; */
     overflow-x: hidden;
@@ -67,60 +67,109 @@ article.slide a {
     color: inherit;
 }
 
+article.slide p {
+    text-wrap: balance;
+    max-width: 80ch;
+    margin-inline: auto;
+}
+
 article.slide .logo {
     width: 100%;
     max-height: 300px;
     overflow: hidden;
 }
+article.slide .slide-number {
+    font-size: 0.75em;
+    position: absolute;
+    width: 2em;
+    aspect-ratio: 1;
+    bottom: 0.25rem;
+    left: 0.25rem;
+    padding: 0.25rem;
+    border-radius: 1em;
+    display: grid;
+    place-items: center;
+    backdrop-filter: brightness(0.6);
+    color: white;
+}
 
-article.slide > figure,
+article.slide blockquote,
+article.slide figure {
+    color: var(--clr-text);
+}
+
+/* SIMPLE SLIDES */
+
+article.slide.simple {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    place-items: center;
+}
+article.slide.simple .content {
+    padding-inline: 2rem;
+}
+
+
+/* article.slide > figure,
 article.slide > blockquote {
     margin: 0;
     font-size: 0.8em;
-}
+} */
 
-article.slide>h2,
+/* article.slide>h2,
 article.slide>p {
     margin-block: 0.25em;
-}
+} */
 
-article.slide blockquote {
+/* article.slide blockquote {
     backdrop-filter: blur(15px) brightness(1.2);
     background: transparent;
     border: none;
-}
-article.slide > * {
-    /* margin: 0; */
-}
-article.slide img {
+} */
+/* article.slide img {
     max-width: 100%;
-    /* max-height: 45dvh; */
     margin: auto;
-}
+} */
 
-article.slide > figure {
+/* article.slide > figure {
     border-radius: 0;
     border-color: var(--clr-slide-text);
     border-width: 0;
     background-color: var(--clr-slide-text);
     color: var(--clr-slide-background);
     margin: 0;
-}
-article.slide figure img {
+} */
+/* article.slide figure img {
     background-color: var(--clr-slide-text);
     display: block;
     border-radius: 0;
     object-fit: cover;
-}
-figure img {
-    /* border-radius: 0.5rem; */
+} */
+/* figure img {
     margin: 0;
     background-color: white;
-}
+} */
 
-figcaption p {
+/* figcaption p {
     text-align: center;
     margin: 0.25rem 0 0 0;
+} */
+
+@property --progress {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 100%;
+}
+
+#slide-progress {
+    width: 100%;
+}
+#slide-progress div {
+    --progress: 0%;
+    background: linear-gradient(to right, var(--clr-accent), var(--clr-accent2));
+    height: 0.25rem;
+    width: var(--progress);
+    transition: --progress 800ms ease-out;
 }
 
 @media (width >=600px) {
