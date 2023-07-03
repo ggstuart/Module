@@ -12,19 +12,17 @@
   <article class="slide current" aria-label="{{.Title}}">
     <h2>{{.Title}}</h2>
     {{partial "logo.html" .}}
-    <p>{{ .Content }}</p>
+    <h3>{{ .Content }}</h3>
     {{ with .Params.Author}}<small>{{.}}</small>{{end}}
   </article>
   {{ $slides := .Resources.Match "slides/*.md" }}
   {{ range sort $slides "Params.Order" "asc" }}
-  <article class="slide {{ delimit .Params.Classes " " }}" aria-labelledby="slide-{{.Params.Order}}">
-    <h2 id="slide-{{.Params.Order}}">{{.Title}}</h2>
-    {{ .Content }}
-  </article>
-  {{ end }}
+    {{.Render -}}
+  {{ end }}  
 
 {{ end }}
 
 {{ define "footer" }}
+  <div id="slide-progress"><div></div></div>
   <small id="instructions">Use arrow keys or swipe left and right to navigate</small>
 {{ end }}
