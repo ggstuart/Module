@@ -1,6 +1,14 @@
 
 {{ define "main" }}
     {{partial "logo.html" .}}
+    <nav class="pagination">
+        {{ with .CurrentSection.RegularPages.Next . }}
+        <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+        {{ with .CurrentSection.RegularPages.Prev . }}
+        <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+    </nav>
     <blockquote>
         <p>
             This is a lab exercise, it is designed to help you gain practical experience with web technologies.
@@ -10,20 +18,12 @@
             It is <strong>critical</strong> that you elaborate on the instructions and deploy the learning you find here in your own example code. 
         </p>
     </blockquote>
-    <nav class="pagination">
-        {{ with .CurrentSection.RegularPages.Next . }}
-        <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
-        {{end}}
-        {{ with .CurrentSection.RegularPages.Prev . }}
-        <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
-        {{end}}
-    </nav>
+    
+    {{ .TableOfContents }}
+    
     <header class="exercise">
         <h2 class="special">{{.Title}}</h2>
     </header>
-
-    {{ .TableOfContents }}
-
     <section>
         {{ .Content }}
     </section>
@@ -31,6 +31,12 @@
 {{ end }}
 
 {{ define "footer" }}
+    {{ with .Params.Author}}
+        <p>
+            This exercise was created by <span class="author">{{.}}</span>
+        </p>
+    {{end}}
+
     <nav class="pagination">
         {{ with .CurrentSection.RegularPages.Next . }}
         <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
