@@ -1,7 +1,7 @@
 
 {{ define "main" }}
+    {{partial "logo.html" .}}
     <blockquote>
-        {{partial "logo.html" .}}
         <p>
             This is a lab exercise, it is designed to help you gain practical experience with web technologies.
             Below you will find step-by-step instructions which you should follow as completely as possible.
@@ -20,7 +20,6 @@
     </nav>
     <header class="exercise">
         <h2 class="special">{{.Title}}</h2>
-        
     </header>
 
     {{ .TableOfContents }}
