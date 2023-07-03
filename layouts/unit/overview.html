@@ -1,13 +1,14 @@
-<h2 class="special">
-    <a href="{{.RelPermalink}}">{{.Title}}</a>
-</h2>
-{{ .Summary }}
-
-{{ range .Pages.GroupBy "Type"}}
-<h2 id="{{.Key}}-heading">{{.Key | pluralize | title}}</h2>
-<section class="grid wider" aria-labelled-by="{{.Key}}-heading">
-{{ range sort .Pages "Params.Order" "asc"}}
-    {{.Render "summary"}}
-{{ end }}
+<section aria-labelledby="unit-{{.Name | urlize }}-heading">
+    <h2 id="unit-{{.Name | urlize }}-heading" class="special">
+        <a href="{{.RelPermalink}}">{{.Title}}</a>
+    </h2>
+    <section aria-label="summary">
+        {{ .Summary }}
+    </section>
+    
+    <article class="grid wider" aria-label="unit-content">
+        {{range .Pages}}
+        {{.Render "summary"}}
+        {{ end }}
+    </article>
 </section>
-{{ end }}
