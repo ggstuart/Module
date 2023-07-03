@@ -1,0 +1,7 @@
+[params]
+    moduleName = 'Your module name'
+    moduleCode = 'MODULE_CODE'
+
+[markup.highlight]
+    noClasses = false
+
