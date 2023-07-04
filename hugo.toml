@@ -4,4 +4,4 @@
 
 [markup.highlight]
     noClasses = false
-
+    linenos = true
