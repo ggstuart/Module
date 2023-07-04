@@ -93,6 +93,9 @@ article.slide .slide-number {
     color: white;
 }
 
+article.slide pre {
+    white-space: pre-wrap;
+}
 article.slide blockquote,
 article.slide figure {
     color: var(--clr-text);

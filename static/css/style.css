@@ -262,6 +262,9 @@ h2.special:has(a):hover {
 p {
     line-height: 1.5;
 }
+li {
+    line-height: 1.3;
+}
 p:empty {display: none;}
 
 blockquote {
@@ -279,7 +282,6 @@ blockquote p {
 
 pre {
     border-radius: 3px;
-    white-space: pre-wrap;
     overflow-wrap: break-word;
     overflow-x: auto;
     text-align: left;
@@ -419,6 +421,7 @@ button.copy-to-clipboard {
 
 code {
     font-family: "Ubuntu Mono";
+    text-transform: none;
 }
 p > code,
 li > code {
