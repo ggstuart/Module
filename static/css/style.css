@@ -233,6 +233,10 @@ h1, h2, h3 {
     /* font-variant: small-caps; */
     text-transform: uppercase;
 }
+h2, h3 {
+    margin-top: 3em;
+    border-bottom: 1px solid var(--clr-accent);
+}
 
 .special {
     font-size: 2em;

@@ -73,6 +73,12 @@ article.slide p {
     margin-inline: auto;
 }
 
+article.slide h2,
+article.slide h3 {
+    margin-block: 0.5em;
+    border-width: 0;
+}
+
 article.slide .logo {
     width: 100%;
     max-height: 300px;
