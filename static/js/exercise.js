@@ -1,4 +1,4 @@
-const codeElements = document.querySelectorAll('pre.chroma:has(code:is(.language-html, .language-css, .language-js))');
+const codeElements = document.querySelectorAll('pre.chroma:has(code:is(.language-html, .language-css, .language-js, .language-php, .language-phtml))');
 
 for (const code of codeElements) {
     const highlight = code.closest('.highlight');
