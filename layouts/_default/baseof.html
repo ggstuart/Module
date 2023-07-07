@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="/css/onedark.css">
     <link rel="stylesheet" href="/css/style.css">
     {{ block "css" . }}{{end}}
+    {{ range .Site.Params.customcss }}
+        <link rel="stylesheet" href="{{ . | relURL }}">
+    {{- end }}
     {{ range .Resources.Match "*.css" }}
         <link rel="stylesheet" href="{{.RelPermalink}}">
     {{ end }}
