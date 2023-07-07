@@ -11,8 +11,10 @@
     --clr-background2: hsla(0, 20%, 30%);
     --clr-primary-button: #264DE4;
     --clr-secondary-button: #2965F1;
+    --clr-button-text: var(--clr-text);
     --clr-accent: #EF652A;
     --clr-accent2: #E34F26;
+    --clr-accent-text: var(--clr-text);
     --global-padding: 0.5rem;
     --accent-gradient: linear-gradient(45deg, var(--clr-accent), 70%, var(--clr-accent2));
     --button-gradient: linear-gradient(45deg, var(--clr-primary-button), 70%, var(--clr-secondary-button));
@@ -144,6 +146,7 @@ header.main-header nav h2 {
 header.main-header nav a {
     padding: 0.25em 0.5em;
     background: var(--button-gradient);
+    color: var(--clr-button-text);
     text-decoration: none;
 }
 
@@ -161,6 +164,7 @@ header.main-header nav label {
     gap: calc(var(--button-size) * 0.15);
     padding: calc(var(--button-size) * 0.3) calc(var(--button-size) * 0.2);
     background: var(--accent-gradient);
+    color: var(--clr-accent-text);
     border: 0.5px solid var(--clr-accent2);
     border-radius: 3px;
     z-index: 11;
@@ -169,7 +173,7 @@ header.main-header nav label {
 header.main-header:has(input#toggler:checked) label {
     left: var(--global-padding);
 }
-header.main-header label::before, header label::after {
+header.main-header label::before, header.main-header label::after {
     content: "";
     background-color: white;
     border-radius: 2px;
@@ -273,6 +277,7 @@ p:empty {display: none;}
 
 blockquote {
     background: var(--accent-gradient);
+    color: var(--clr-accent-text);
     border-radius: 0 5px 5px 0;
     border-left: 5px solid var(--clr-accent2);
     margin: 2rem 0;
@@ -298,6 +303,7 @@ figure {
     backdrop-filter: brightness(0.6);
     border-radius: 0.5rem;
     background-color: var(--clr-accent);
+    color: var(--clr-accent-text);
     margin: 2em 0;
 }
 figure img {
@@ -405,7 +411,7 @@ img.logo {
 
 button {
     background: var(--button-gradient);
-    color: inherit;
+    color: var(--clr-accent-text);
     padding: 0.25rem 0.5rem;
     transition: 350ms;
 }
@@ -431,7 +437,7 @@ p > code,
 li > code {
     filter: brightness(1.2);
     background: var(--accent-gradient);
-
+    color: var(--clr-accent-text);
 }
 
 .highlight {
@@ -486,6 +492,11 @@ li > code {
 .chroma:has(code.language-js)::before {
     background-image: url(/images/javascript_badge.svg);
 }
+.chroma:has(code.language-php)::before,
+.chroma:has(code.language-phtml)::before {
+    background-image: url(/images/php-logo.svg);
+    background-size: 3em;
+}
 pre.mermaid {
     /* background-color: white; */
     padding: var(--global-padding); 
@@ -494,7 +505,9 @@ pre.mermaid {
 article.summary {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(145deg, var(--clr-primary-button), 80%, var(--clr-secondary-button));
+    background: var(--button-gradient);
+    color: var(--clr-button-text);
+    /* background: linear-gradient(145deg, var(--clr-primary-button), 80%, var(--clr-secondary-button)); */
     border-radius: 0 5px 5px 0;
     border: 1px solid var(--clr-secondary-button);
     border-left-width: 0.5rem;
@@ -523,7 +536,7 @@ article.summary h3 {
 }
 
 article.summary.lecture {
-    background: linear-gradient(145deg, var(--clr-slide-background), 50%, white);
+    background: var(--clr-slide-background);
     color: var(--clr-slide-text);
     border-radius: 0.25em;
     text-align: center;
@@ -543,6 +556,7 @@ article.summary.lecture {
 
 .pagination {
     background: var(--accent-gradient);
+    color: var(--clr-accent-text);
     padding: var(--global-padding);
     display: flex;
     flex-wrap: wrap;
