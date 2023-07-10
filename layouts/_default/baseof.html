@@ -23,7 +23,7 @@
 </head>
 <body{{ block "bodyAttributes" . }}{{end}}>
     <header class="main-header">
-        <a href="/" aria-label="home">
+        <a href="{{"" | absURL }}" aria-label="home">
 {{ partial "logo.html" .}}
         </a>
         <h1>
@@ -50,5 +50,10 @@
         <p>This is the default footer</p>
         {{ end }}
     </footer>
+    <p id="theme">
+        <a href="https://github.com/ggstuart/module">
+            module theme by ggstuart
+        </a>
+    </p>
 </body>
 </html>

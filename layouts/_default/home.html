@@ -11,5 +11,12 @@
 
 
 {{ define "footer" }}
-    Put some details here (fat footer?)
+<section>
+    <h2>Units</h2>
+    <ul class="grid">
+        {{ range where .Sections "Type" "unit"}}
+            {{.Render "summary"}}
+        {{ end }}
+    </ul>
+</section>
 {{ end }}

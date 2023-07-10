@@ -601,10 +601,6 @@ a.next::after {
     filter: drop-shadow(0 0 10px hsl(200 0% 0% / 0.5));
 }
 
-@media (hover: hover) {
-
-}
-
 @media (width >= 430px) {
     .optional {
         display: initial;
@@ -619,4 +615,40 @@ a.next::after {
     p {
         line-height: 1.4;
     }   
+}
+
+body > footer {
+    background: var(--background-gradient);
+    font-weight: 500;
+
+    max-width: var(--main-width);
+    margin-inline: auto;
+    padding: var(--global-padding);
+}
+
+footer ul.grid {
+    list-style: none;
+    gap: 1rem;
+    margin: 0;
+}
+
+footer ul.grid li {
+    background: var(--accent-gradient);
+    color: var(--clr-accent-text);
+}
+
+footer ul.grid li a {
+    color: inherit;
+    display: block;
+    padding: 1rem 2rem;
+    text-decoration: none;
+}
+
+#theme {
+    max-width: var(--main-width);
+    margin-inline: auto;
+    font-weight: 200;
+    text-align: right;
+    opacity: 0.3;
+    padding-block: var(--global-padding);
 }
