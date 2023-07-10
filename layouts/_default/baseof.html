@@ -10,8 +10,8 @@
         {{if .Site.Title }} &ndash; {{ .Site.Title }}{{ end }}
     {{ end }}
     </title>
-    <link rel="stylesheet" href="/css/onedark.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/onedark.css">
+    <link rel="stylesheet" href="css/style.css">
     {{ block "css" . }}{{end}}
     {{ range .Site.Params.customcss }}
         <link rel="stylesheet" href="{{ . | relURL }}">
