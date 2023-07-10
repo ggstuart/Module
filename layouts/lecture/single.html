@@ -9,7 +9,7 @@
 {{define "bodyAttributes"}} class="presentation"{{end}}
 
 {{ define "main" }}
-  <article class="slide current" aria-label="{{.Title}}">
+  <article class="slide title current" aria-label="{{.Title}}">
     <h2>{{.Title}}</h2>
     {{partial "logo.html" .}}
     <h3>{{ .Content }}</h3>
@@ -19,7 +19,6 @@
   {{ range sort $slides "Params.Order" "asc" }}
     {{.Render -}}
   {{ end }}  
-
 {{ end }}
 
 {{ define "footer" }}

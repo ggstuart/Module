@@ -79,6 +79,11 @@ article.slide h3 {
     border-width: 0;
 }
 
+article.slide blockquote {
+    border-radius: 0;
+    border: 0;
+}
+
 article.slide .logo {
     width: 100%;
     max-height: 300px;
@@ -107,6 +112,12 @@ article.slide figure {
     color: var(--clr-text);
 } */
 
+article.slide.title {
+    display: grid;
+    /* grid-template-rows: auto 1fr; */
+    place-items: center;
+}
+
 /* SIMPLE SLIDES */
 
 article.slide.simple {
@@ -117,7 +128,6 @@ article.slide.simple {
 article.slide.simple .content {
     padding-inline: 2rem;
 }
-
 
 /* article.slide > figure,
 article.slide > blockquote {
