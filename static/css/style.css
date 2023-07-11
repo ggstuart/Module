@@ -488,17 +488,17 @@ li > code {
 }
 
 .chroma:has(code.language-css)::before {
-    background-image: url(/images/css3_badge.svg);
+    background-image: url(../images/css3_badge.svg);
 }
 .chroma:has(code.language-html)::before {
-    background-image: url(/images/html5_badge.svg);
+    background-image: url(../images/html5_badge.svg);
 }
 .chroma:has(code.language-js)::before {
-    background-image: url(/images/javascript_badge.svg);
+    background-image: url(../images/javascript_badge.svg);
 }
 .chroma:has(code.language-php)::before,
 .chroma:has(code.language-phtml)::before {
-    background-image: url(/images/php-logo.svg);
+    background-image: url(../images/php-logo.svg);
     background-size: 3em;
 }
 pre.mermaid {
