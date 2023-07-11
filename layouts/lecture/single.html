@@ -1,9 +1,9 @@
 {{define "css"}}
-<link rel="stylesheet" href="/css/presentation.css">
+<link rel="stylesheet" href="{{"css/presentation.css" | absURL}}">
 {{end}}
 
 {{define "javascript"}}
-<script src="/js/presentation.js" type="module"></script>
+<script src="{{"js/presentation.js" | absURL}}" type="module"></script>
 {{end}}
 
 {{define "bodyAttributes"}} class="presentation"{{end}}
