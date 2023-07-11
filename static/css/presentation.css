@@ -3,14 +3,13 @@
 }
 body {
     height: 100dvh;
-    /* overflow: hidden; */
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr auto;
 }
 
 header, nav.breadcrumbs {
-    padding: 0.5rem;
+    padding-block: 0.5rem;
     width: 100dvw;
 }
 main {
@@ -107,16 +106,15 @@ article.slide .slide-number {
 article.slide pre {
     white-space: pre-wrap;
 }
-/* article.slide blockquote,
-article.slide figure {
-    color: var(--clr-text);
-} */
 
 article.slide.title {
     display: grid;
-    /* grid-template-rows: auto 1fr; */
     place-items: center;
 }
+
+
+
+
 
 /* SIMPLE SLIDES */
 
@@ -128,51 +126,6 @@ article.slide.simple {
 article.slide.simple .content {
     padding-inline: 2rem;
 }
-
-/* article.slide > figure,
-article.slide > blockquote {
-    margin: 0;
-    font-size: 0.8em;
-} */
-
-/* article.slide>h2,
-article.slide>p {
-    margin-block: 0.25em;
-} */
-
-/* article.slide blockquote {
-    backdrop-filter: blur(15px) brightness(1.2);
-    background: transparent;
-    border: none;
-} */
-/* article.slide img {
-    max-width: 100%;
-    margin: auto;
-} */
-
-/* article.slide > figure {
-    border-radius: 0;
-    border-color: var(--clr-slide-text);
-    border-width: 0;
-    background-color: var(--clr-slide-text);
-    color: var(--clr-slide-background);
-    margin: 0;
-} */
-/* article.slide figure img {
-    background-color: var(--clr-slide-text);
-    display: block;
-    border-radius: 0;
-    object-fit: cover;
-} */
-/* figure img {
-    margin: 0;
-    background-color: white;
-} */
-
-/* figcaption p {
-    text-align: center;
-    margin: 0.25rem 0 0 0;
-} */
 
 @property --progress {
     syntax: "<percentage>";
@@ -190,6 +143,23 @@ article.slide>p {
     width: var(--progress);
     transition: --progress 800ms ease-out;
 }
+
+
+body>footer {
+    font-weight: 200;
+    max-width: none;
+    margin-inline: 0;
+}
+
+#theme {
+    position: fixed;
+    bottom: var(--global-padding);
+    right: var(--global-padding);
+    max-width: none;
+    margin: 0;
+    padding-block: 0;
+}
+
 
 @media (width >=600px) {
     main {
