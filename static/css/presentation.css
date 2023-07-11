@@ -62,10 +62,6 @@ article.slide.current {
     z-index: 20;
 }
 
-article.slide a {
-    color: inherit;
-}
-
 article.slide p {
     text-wrap: balance;
     max-width: 80ch;

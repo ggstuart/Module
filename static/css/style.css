@@ -228,7 +228,7 @@ main {
     max-width: var(--main-width);
     margin-inline: auto;
     padding-inline: var(--global-padding);
-    padding-block: 5em;
+    padding-top: 5em;
 }
 
 h1, h2, h3 {
@@ -251,7 +251,7 @@ h2, h3 {
 }
 
 a {
-    color: var(--clr-text);
+    color: inherit;
     filter: brightness(0.9);
     transition: filter 0.2s;
 }
@@ -369,7 +369,6 @@ ul.contents {
     filter: none;
 }
 #TableOfContents a {
-    color: inherit;
     text-decoration: none;
 }
 
@@ -524,7 +523,6 @@ article.summary:hover {
     filter: brightness(1.1) drop-shadow(0 5px 10px hsla(0, 0%, 100%, 0.1));
 }
 article.summary a {
-    color: inherit;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -555,22 +553,18 @@ article.summary.lecture {
     max-width: 50%;
 }
 
-.grid article.summary.lecture a {
-    color: inherit;
-}
-
 .pagination {
     background: var(--accent-gradient);
     color: var(--clr-accent-text);
     padding: var(--global-padding);
     display: flex;
     flex-wrap: wrap;
+    gap: 0 1em;
     justify-content: space-between;
     align-items: center;
 }
 .pagination a {
     text-decoration: none;
-    color: inherit;
 }
 a.prev, a.next {
     flex-grow: 1;
@@ -620,10 +614,10 @@ a.next::after {
 body > footer {
     background: var(--background-gradient);
     font-weight: 500;
-
-    max-width: var(--main-width);
+    background: var(--button-gradient);
+    color: var(--clr-button-text);
     margin-inline: auto;
-    padding: var(--global-padding);
+    padding: var(--global-padding) max(var(--global-padding), var(--header-padding-inline));
 }
 
 footer ul.grid {
@@ -638,7 +632,6 @@ footer ul.grid li {
 }
 
 footer ul.grid li a {
-    color: inherit;
     display: block;
     padding: 1rem 2rem;
     text-decoration: none;
@@ -646,9 +639,16 @@ footer ul.grid li a {
 
 #theme {
     max-width: var(--main-width);
-    margin-inline: auto;
+    margin-bottom: 0;
     font-weight: 200;
     text-align: right;
-    opacity: 0.3;
-    padding-block: var(--global-padding);
+    opacity: 0.5;
+    transition: opacity 200ms;
+}
+
+#theme a {
+    text-underline-offset: 3px;
+}
+footer:hover #theme {
+    opacity: 0.7;
 }
