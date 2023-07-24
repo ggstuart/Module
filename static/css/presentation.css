@@ -109,9 +109,6 @@ article.slide.title {
 }
 
 
-
-
-
 /* SIMPLE SLIDES */
 
 article.slide.simple {
@@ -131,10 +128,11 @@ article.slide.simple .content {
 
 #slide-progress {
     width: 100%;
+    background: hsl(0 0% 100% / 0.25);
 }
 #slide-progress div {
-    --progress: 0%;
     background: linear-gradient(to right, var(--clr-accent), var(--clr-accent2));
+    --progress: 0%;
     height: 0.25rem;
     width: var(--progress);
     transition: --progress 800ms ease-out;

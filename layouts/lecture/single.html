@@ -17,7 +17,7 @@
   </article>
   {{ $slides := .Resources.Match "slides/*.md" }}
   {{ range sort $slides "Params.Order" "asc" }}
-    {{.Render -}}
+    {{.Render "single"}}
   {{ end }}  
 {{ end }}
 
