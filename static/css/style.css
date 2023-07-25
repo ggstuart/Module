@@ -131,8 +131,13 @@ header.main-header nav {
     translate: 100%;
     transition: translate 0.4s;
     z-index: 100;
-    backdrop-filter: brightness(0.7) blur(5px);
+    backdrop-filter: brightness(0.9) blur(10px);
     padding: 4rem var(--global-padding);
+    background: linear-gradient(45deg, 
+        var(--clr-primary-button), 5%, 
+        transparent, 95%,
+        var(--clr-secondary-button)
+    )
 }
 header.main-header nav:has(input#toggler:checked) {
     translate: none;
@@ -252,11 +257,10 @@ h2, h3 {
 
 a {
     color: inherit;
-    filter: brightness(0.9);
-    transition: filter 0.2s;
+    transition: scale 0.2s;
 }
 a:hover {
-    filter: brightness(1.2) saturate(2);
+    scale: 1.02;
 }
 
 h2.special a {
