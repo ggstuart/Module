@@ -1,12 +1,16 @@
 {{define "bodyAttributes"}} class="hero"{{end}}
 
 {{ define "main" }}
-    <h2>{{.Title}}</h2>
-    {{ .Content }}
+    <section>
+        <h2>{{.Title}}</h2>
+        {{ .Content }}
+    </section>
 
+    <section>
     {{ range where .Sections "Type" "unit"}}
         {{.Render "overview"}}
     {{ end }}    
+    </section>
 {{ end }}
 
 
