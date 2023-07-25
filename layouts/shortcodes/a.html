@@ -1,0 +1,3 @@
+<a {{- range $k, $v :=.Params -}} {{- (printf " %s=%q" $k $v) | safeHTMLAttr -}} {{- end -}}>
+    {{- .Inner | .Page.RenderString -}}
+</a>
