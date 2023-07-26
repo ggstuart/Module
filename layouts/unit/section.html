@@ -21,5 +21,12 @@
 {{ end }}
 
 {{ define "footer" }}
-    using proper unit template
+    <nav class="pagination">
+        {{ with .Parent.Sections.Next . }}
+        <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+        {{ with .Parent.Sections.Prev . }}
+        <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
+        {{end}}
+    </nav>
 {{ end }}
