@@ -7,7 +7,7 @@
 
     
     <h3 id="lectures-heading">Lectures</h3>
-    <section class="grid wider" aria-labelled-by="lectures-heading">
+    <section class="grid" aria-labelled-by="lectures-heading">
         {{with .GetPage "/lectures"}}
             {{ range (.Pages.ByParam "week") }}
                 {{.Render "summary"}}
@@ -16,7 +16,7 @@
     </section>
 
     <h3 id="exercises-heading">Exercises</h3>
-    <section class="grid wider" aria-labelledby="exercises-heading">
+    <section class="grid" aria-labelledby="exercises-heading">
         {{with .GetPage "/exercises"}}
             {{ range (.Pages.ByParam "week") }}
                 {{.Render "summary"}}
