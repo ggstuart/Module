@@ -532,9 +532,8 @@ article.summary:hover {
     filter: brightness(1.1) drop-shadow(0 5px 10px hsla(0, 0%, 100%, 0.1));
 }
 article.summary a {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     text-decoration: none;
     padding: 0.5rem;
     flex-grow: 1;
@@ -544,7 +543,7 @@ article.summary footer {
     justify-content: flex-end;
 }
 article.summary h3 {
-    margin-top: 0;
+    margin: 0;
 }
 
 article.summary.lecture {
@@ -560,6 +559,7 @@ article.summary.lecture {
 }
 .grid article.summary.lecture .logo {
     max-width: 50%;
+    margin-top: 1em;
 }
 
 .pagination {
