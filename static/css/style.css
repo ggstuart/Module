@@ -238,7 +238,10 @@ main {
     max-width: var(--main-width);
     margin-inline: auto;
     padding-inline: var(--global-padding);
-    padding-top: 5em;
+    padding-block: 5em;
+}
+body.hero main {
+    padding-top: 0;
 }
 
 h1, h2, h3 {
