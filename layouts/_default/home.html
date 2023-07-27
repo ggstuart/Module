@@ -6,21 +6,18 @@
         {{ .Content }}
     </section>
 
-    <section>
-    {{ range where .Sections "Type" "unit"}}
-        {{.Render "overview"}}
-    {{ end }}    
+    <section aria-labelledby="units">
+        <h2 id="units">Units</h2>
+        <div class="grid">
+            {{ range where .Sections "Type" "unit"}}
+            {{.Render "summary"}}
+            {{ end }}
+        </div>
     </section>
 {{ end }}
 
-
 {{ define "footer" }}
-<section>
-    <h2>Units</h2>
-    <ul class="grid">
-        {{ range where .Sections "Type" "unit"}}
-            {{.Render "summary"}}
-        {{ end }}
-    </ul>
-</section>
+<p class="balanced">
+    If you find any errors in the materials on this website or have any suggestions for updates then please contact the module leader.
+</p>
 {{ end }}

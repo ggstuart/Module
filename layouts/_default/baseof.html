@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="{{.RelPermalink}}">
     {{ end }}
     {{ block "javascript" . }}{{end}}
+    <script src="{{"js/menu.js" | absURL}}" type="module"></script>
+
 </head>
 <body{{ block "bodyAttributes" . }}{{end}}>
     <header class="main-header">

@@ -1,10 +1,11 @@
 <article class="summary {{.Type}}" aria-labelledby="{{.Title | urlize}}-heading">
-    <a href="{{.RelPermalink}}">    
-        <h3 id="{{.Title | urlize}}-heading">{{.Type | title}}: {{ .Title }}</h3>
-        {{ .Summary }}
+    <a href="{{.RelPermalink}}">
+        <h3 id="{{.Title | urlize}}-heading">{{ .Title | title }}</h3>
+        <section>
+            {{ .Summary }}
+        </section>
         <footer>
-            <small>{{ .Date.Format "Monday" }}, {{ humanize .Date.Day }} of {{ .Date.Format "January 2006" }}</small>
+            <small>{{.Type}}</small>
         </footer>
     </a>
 </article>
-

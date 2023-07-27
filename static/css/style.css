@@ -3,6 +3,12 @@
     box-sizing: border-box;
 }
 
+@property --color {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: red;
+}
+
 :root {
     --clr-text: hsl(0, 70%, 95%);
     --clr-slide-text: hsl(0, 10%, 10%);
@@ -21,6 +27,11 @@
     --background-gradient: linear-gradient(180deg, var(--clr-background), 70%, var(--clr-background2));
     --main-width: 1000px;
     --header-padding-inline: calc(calc(calc(100dvw - var(--main-width)) / 2) + var(--global-padding));
+    --nav-gradient: linear-gradient(45deg,
+            var(--clr-primary-button), 15%,
+            transparent, 85%,
+            var(--clr-secondary-button))
+
 }
 @media (width >= 800px) {
     :root {
@@ -28,12 +39,21 @@
     }
 }
 
+body, header, footer, h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color);
+}
+
 body {
     font-family: "ubuntu";
     font-weight: 300;
     margin: 0 auto;
     background: var(--clr-background);
-    color: var(--clr-text);
+    --color: var(--clr-text);
     min-height: 100dvh;
 }
 
@@ -54,25 +74,44 @@ header.main-header {
     padding: var(--global-padding) max(var(--global-padding), var(--header-padding-inline));
 }
 
-header h1 {
+header.main-header h1 {
     font-size: 1em;
     margin: 0 2rem 0 0;
 }
 @media (width>=600px) {
-    header h1 {
+    header.main-header h1 {
         font-size: 1.3em;
     }
 }
 
 /* HERO */
+body.hero {
+    background: var(--accent-gradient);
+    --color: var(--clr-accent-text);
+}
 
-body.hero header {
+body.hero>header {
+    background: var(--button-gradient);
+    --color: var(--clr-button-text);
     grid-template-columns: 1fr;
-    justify-items: center;
+    place-items: center;
     text-align: center;
-    padding: 2em;
+    padding: 1rem;
     min-height: 100dvh;
 }
+
+body.hero h1 {
+    margin: 0;
+}
+body.hero main h2 {
+    border-color: var(--clr-primary-button);
+}
+body.hero>footer {
+    background: var(--background-gradient);
+    --color: var(--clr-text);
+}
+
+
 body.hero header h1 .module-code {
     font-size: 2.9em;
 }
@@ -117,6 +156,8 @@ body.hero header h1 .module-code {
     }
 }
 
+
+
 em {
     font-weight: 400;
 }
@@ -136,13 +177,10 @@ header.main-header nav {
     translate: 100%;
     transition: translate 0.4s;
     z-index: 100;
-    backdrop-filter: brightness(0.9) blur(10px);
+    backdrop-filter: brightness(0.7) blur(10px);
     padding: 4rem var(--global-padding);
-    background: linear-gradient(45deg, 
-        var(--clr-primary-button), 5%, 
-        transparent, 95%,
-        var(--clr-secondary-button)
-    )
+    background: var(--nav-gradient);
+    --color: var(--clr-button-text);
 }
 header.main-header nav:has(input#toggler:checked) {
     translate: none;
@@ -150,14 +188,19 @@ header.main-header nav:has(input#toggler:checked) {
 
 header.main-header nav h2 {
     margin: 0;
-    font-size: 0.9em;
+    font-size: 1.1em;
 }
 
 header.main-header nav a {
+    font-size: 1.1em;
     padding: 0.25em 0.5em;
     background: var(--button-gradient);
-    color: var(--clr-button-text);
+    /* --color: var(--clr-button-text); */
     text-decoration: none;
+    border: 0.5px solid var(--color);
+}
+header.main-header nav a:hover {
+    background: var(--clr-primary-button);
 }
 
 
@@ -174,7 +217,7 @@ header.main-header nav label {
     gap: calc(var(--button-size) * 0.15);
     padding: calc(var(--button-size) * 0.3) calc(var(--button-size) * 0.2);
     background: var(--accent-gradient);
-    color: var(--clr-accent-text);
+    --color: var(--clr-accent-text);
     border: 0.5px solid var(--clr-accent2);
     border-radius: 3px;
     z-index: 11;
@@ -219,7 +262,6 @@ nav.breadcrumbs {
 }
 nav.breadcrumbs a {
     text-decoration: none;
-    color: var(--link-color);
     padding: 0.125em;
     border-radius: 3px;
     flex-shrink: 0;
@@ -244,27 +286,32 @@ body.hero main {
     padding-top: 0;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     text-wrap: balance;
-    /* font-variant: small-caps; */
     text-transform: uppercase;
+    border-color: var(--color);
+    border-style: solid;
+    border-width: 0;
 }
 h2, h3 {
     margin-top: 3em;
-    border-bottom: 1px solid var(--clr-accent);
+    border-bottom-width: 6px;
+}
+h3 {
+    border-bottom-width: 3px;
 }
 
 .special {
     font-size: 2em;
     margin-top: 5rem;
     padding: 1rem 0 .5rem;
-    border-bottom: 3px solid var(--clr-accent);
+    border-color: var(--clr-accent);
     transition: backdrop-filter 400ms;
 }
 
 a {
-    color: inherit;
+    color: var(--color);
     transition: scale 0.2s;
 }
 a:hover {
@@ -289,7 +336,8 @@ p:empty {display: none;}
 
 blockquote {
     background: var(--accent-gradient);
-    color: var(--clr-accent-text);
+    --color: var(--clr-accent-text);
+    color: var(--color);
     border-radius: 0 5px 5px 0;
     border-left: 5px solid var(--clr-accent2);
     margin: 2rem 0;
@@ -315,12 +363,14 @@ figure {
     backdrop-filter: brightness(0.6);
     border-radius: 0.5rem;
     background-color: var(--clr-accent);
-    color: var(--clr-accent-text);
+    --color: var(--clr-accent-text);
+    color: var(--color);
     margin: 2em 0;
 }
 figure img {
     border-radius: 0.5rem;
     margin: 0;
+    width: 100%;
     /* background-color: white; */
 }
 figcaption p {
@@ -352,7 +402,8 @@ ul.contents {
 }
 #TableOfContents {
     background: var(--button-gradient);
-    color: var(--clr-button-text);
+    /* color: var(--clr-button-text); */
+    --color: var(--clr-button-text);
     border-radius: 0.5rem;
     padding: 0;
     border: 1px solid var(--clr-primary-button);
@@ -366,6 +417,7 @@ ul.contents {
     padding: 0.25rem 0;
 }
 #TableOfContents li::marker {
+    color: var(--color);
     content: "↪ ";
 }
 
@@ -376,9 +428,10 @@ ul.contents {
 
 #TableOfContents li:hover {
     filter: brightness(1.2);
+    background: var(--clr-primary-button);
 }
 #TableOfContents li:hover:has(li:hover) {
-    filter: none;
+    background: transparent;
 }
 #TableOfContents a {
     text-decoration: none;
@@ -422,23 +475,26 @@ img.logo {
 }
 
 button {
+    color: var(--color);
     background: var(--button-gradient);
-    color: var(--clr-button-text);
+
+    --color: var(--clr-button-text);
     padding: 0.25rem 0.5rem;
     transition: 350ms;
+    scale: 0.95;
 }
 button:hover {
-    scale: 1.05;
+    scale: 1;
 }
 
 button:active {
-    filter: brightness(1.5);
-    scale: 1.2;
+    filter: brightness(1.2);
 }
 
 button.copy-to-clipboard {
+    font-size: 0.7em;
     border-radius: 1em;
-    border: 1.5px solid white;
+    border: 1px solid white;
 }
 
 code {
@@ -522,7 +578,7 @@ article.summary {
     display: flex;
     flex-direction: column;
     background: var(--button-gradient);
-    color: var(--clr-button-text);
+    --color: var(--clr-button-text);
     border-radius: 0 5px 5px 0;
     border: 1px solid var(--clr-secondary-button);
     border-left-width: 0.5rem;
@@ -551,7 +607,7 @@ article.summary h3 {
 
 article.summary.lecture {
     background: var(--clr-slide-background);
-    color: var(--clr-slide-text);
+    --color: var(--clr-slide-text);
     border-radius: 0.25em;
     text-align: center;
     overflow: hidden;
@@ -560,6 +616,9 @@ article.summary.lecture {
 .grid article.summary.lecture:hover {
     filter: drop-shadow(0 0 5px var(--clr-text));
 }
+article.summary.lecture h3 {
+    border-width: 0;
+}
 .grid article.summary.lecture .logo {
     max-width: 50%;
     margin-top: 1em;
@@ -567,7 +626,7 @@ article.summary.lecture {
 
 .pagination {
     background: var(--accent-gradient);
-    color: var(--clr-accent-text);
+    --color: var(--clr-accent-text);
     padding: var(--global-padding);
     display: flex;
     flex-wrap: wrap;
@@ -627,23 +686,23 @@ body > footer {
     background: var(--background-gradient);
     font-weight: 500;
     background: var(--button-gradient);
-    color: var(--clr-button-text);
+    --color: var(--clr-button-text);
     margin-inline: auto;
     padding: var(--global-padding) max(var(--global-padding), var(--header-padding-inline));
 }
 
-footer ul.grid {
+ul.grid {
     list-style: none;
     gap: 1rem;
     margin: 0;
 }
 
-footer ul.grid li {
+ul.grid li {
     background: var(--accent-gradient);
-    color: var(--clr-accent-text);
+    --color: var(--clr-accent-text);
 }
 
-footer ul.grid li a {
+ul.grid li a {
     display: block;
     padding: 1rem 2rem;
     text-decoration: none;
@@ -654,8 +713,9 @@ footer ul.grid li a {
     margin-bottom: 0;
     font-weight: 200;
     text-align: right;
-    opacity: 0.5;
+    opacity: 0.4;
     transition: opacity 200ms;
+    font-size: 0.6em;
 }
 
 #theme a {
@@ -663,4 +723,27 @@ footer ul.grid li a {
 }
 footer:hover #theme {
     opacity: 0.7;
+}
+
+.temporary-modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    backdrop-filter: brightness(0.2);
+    color: white;
+    animation: disappear 3s forwards;
+}
+
+@keyframes disappear {
+    20% {
+        opacity: 1;
+    }
+    99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
 }
