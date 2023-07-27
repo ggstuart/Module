@@ -132,6 +132,10 @@ body.hero header .logo {
 body.hero header a:has(.logo) {
     width: 100%;
 }
+body.hero header a:has(.logo):hover {
+    scale: 1;
+}
+
 body.hero header h1 .module-code {
     text-shadow: 0 0 12px white;
 }
@@ -723,27 +727,4 @@ ul.grid li a {
 }
 footer:hover #theme {
     opacity: 0.7;
-}
-
-.temporary-modal {
-    position: fixed;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    backdrop-filter: brightness(0.2);
-    color: white;
-    animation: disappear 3s forwards;
-}
-
-@keyframes disappear {
-    20% {
-        opacity: 1;
-    }
-    99% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 0;
-        display: none;
-    }
 }
