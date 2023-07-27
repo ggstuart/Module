@@ -29,7 +29,7 @@ footer {
 article.slide {
     background: var(--clr-slide-background);
     color: var(--clr-slide-text);
-    filter: drop-shadow(0 0 15px var(--clr-slide-text));
+    filter: drop-shadow(0 0 0.5rem var(--clr-slide-text));
     position: absolute; 
     inset: 0;
     padding: 0;
@@ -46,7 +46,7 @@ article.slide {
     article.slide {
         /* padding: 1rem; */
         border-radius: 0.5em;
-        margin: 0.5rem auto;
+        margin: 1rem auto;
     }
 }
 
@@ -85,7 +85,7 @@ article.slide .logo {
     overflow: hidden;
 }
 article.slide .slide-number {
-    font-size: 0.75em;
+    font-size: 1rem;
     position: absolute;
     width: 2em;
     aspect-ratio: 1;
