@@ -39,7 +39,7 @@
             {{range .CurrentSection.Pages.GroupBy "Type"}}
             <h2>{{.Key | pluralize}}</h2>
             {{range .Pages}}
-                <a href="{{.RelPermalink}}">{{.Title}}</a>
+                <a href="{{.RelPermalink}}">{{.Title | title }}</a>
             {{end}}
             {{end}}
         </nav>
