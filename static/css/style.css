@@ -103,9 +103,10 @@ body.hero>header {
 body.hero h1 {
     margin: 0;
 }
-body.hero main h2 {
-    border-color: var(--clr-primary-button);
+body.hero main > .content p {
+    font-size: 1.4em;
 }
+
 body.hero>footer {
     background: var(--background-gradient);
     --color: var(--clr-text);
