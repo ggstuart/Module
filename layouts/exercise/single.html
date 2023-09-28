@@ -1,6 +1,8 @@
 {{ define "main" }}
 {{partial "logo.html" .}}
 <header class="exercise">
+    {{partial "exercise/intro.html" .}}
+    {{ .TableOfContents }}
     <h2 class="special">{{.Title}}</h2>
     <nav class="pagination">
         {{ with .CurrentSection.RegularPages.Next . }}
@@ -10,10 +12,8 @@
         <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
         {{end}}
     </nav>
-    {{partial "exercise/intro.html" .}}
 </header>
     
-    {{ .TableOfContents }}
     
     <section>
         {{ .Content }}
