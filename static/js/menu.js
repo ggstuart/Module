@@ -1,7 +1,11 @@
-document.getElementById('toggler').checked = JSON.parse(localStorage.getItem('menu'));
+const toggler = document.getElementById('toggler');
+toggler.checked = JSON.parse(localStorage.getItem('menu'));
 document.addEventListener('keydown', ev => {
     if (ev.key == "m") {
-        document.getElementById('toggler').checked ^= 1;
-        localStorage.setItem('menu', document.getElementById('toggler').checked);
+        toggler.click();
     }
 });
+
+toggler.addEventListener('change', ev => { 
+    localStorage.setItem('menu', toggler.checked);
+})
