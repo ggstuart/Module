@@ -68,6 +68,11 @@ article.slide p {
     margin-inline: auto;
 }
 
+article.slide h1 {
+    font-size: 2em;
+}
+
+article.slide h1,
 article.slide h2,
 article.slide h3 {
     margin-block: 0.5em;
@@ -76,6 +81,13 @@ article.slide h3 {
 
 article.slide blockquote {
     border-radius: 0;
+    border: 0;
+    margin: 0;
+    display: grid;
+    place-items: center;
+}
+
+article.slide .highlight {
     border: 0;
 }
 
@@ -109,15 +121,27 @@ article.slide.title {
 }
 
 
-/* SIMPLE SLIDES */
+/* CUSTOM SLIDES */
+
+/* simple slides */
 
 article.slide.simple {
     display: grid;
     grid-template-rows: auto 1fr;
-    place-items: center;
+    place-items: top;
 }
+
 article.slide.simple .content {
-    padding-inline: 2rem;
+    padding: 0 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    grid-auto-rows: min-content;
+    gap: 3px;
+}
+
+article.slide.simple .content .highlight {
+    display: grid;
 }
 
 @property --progress {
