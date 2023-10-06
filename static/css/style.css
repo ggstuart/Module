@@ -731,9 +731,10 @@ footer:hover #theme {
 }
 
 iframe {
+    --color: black;
     max-width: 100%;
     border: 2px solid var(--color);
     border-top-width: 1.5em;
     border-radius: 5px;
-    box-shadow: 0 0 5px var(--color);
+    box-shadow: 0 0 15px var(--color);
 }
