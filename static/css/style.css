@@ -731,10 +731,11 @@ footer:hover #theme {
 }
 
 iframe {
-    --color: black;
+    /* --color: var(--clr-primary-button); */
+    /* --color: hsl(from var(--clr-primary-button) h s 10); */
     max-width: 100%;
-    border: 2px solid var(--color);
+    border: 2px solid var(--clr-primary-button);
     border-top-width: 1.5em;
     border-radius: 5px;
-    box-shadow: 0 0 15px var(--color);
+    box-shadow: 0 0 15px var(--clr-secondary-button);
 }
