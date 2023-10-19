@@ -127,6 +127,7 @@ body.hero h1 .with-colon::after {
 }
 
 body.hero header .logo {
+    font-size: 3rem;
     width: 100%;
     padding: 1em;
 }
@@ -450,7 +451,7 @@ ul.contents {
 }
 
 .logo {
-    max-width: 600px;
+    /* max-width: 600px; */
     margin-inline: auto;
     display: block;
 }
@@ -461,6 +462,7 @@ img {
 }
 img.logo {
     min-height: 1.2em;
+    max-height: 9em;
 }
 .draft {
     backdrop-filter: brightness(0.8);
