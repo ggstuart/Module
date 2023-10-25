@@ -162,8 +162,6 @@ body.hero header h1 .module-code {
     }
 }
 
-
-
 em {
     font-weight: 400;
 }
@@ -171,6 +169,7 @@ em {
 /* Menu */
 
 header.main-header nav {
+    font-family: "ubuntu";
     --button-size: 2rem;
     position: fixed;
     display: flex;
