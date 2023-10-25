@@ -36,6 +36,9 @@
         <nav aria-label="main menu">
             <label for="toggler" aria-label="menu toggler"></label>
             <input id="toggler" type="checkbox" aria-label="menu toggler">
+            {{with .Parent}}
+            <a href="{{.RelPermalink}}">{{.Title | title }}</a>
+            {{end}}
             {{range .CurrentSection.Pages.GroupBy "Type"}}
             <h2>{{.Key | pluralize}}</h2>
             {{range .Pages}}
