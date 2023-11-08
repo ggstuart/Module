@@ -16,9 +16,19 @@
     {{ with .Params.Author}}<small>{{.}}</small>{{end}}
   </article>
   {{ $slides := .Resources.Match "slides/*.md" }}
-  {{ range sort $slides "Params.Order" "asc" }}
-    {{.Render "single"}}
+  {{ range $n, $slide := sort $slides "Params.Order" "asc" }}
+    {{$slide.Render "single"}}
   {{ end }}  
+  <article class="slide title" aria-label="questions?">
+    <h2>{{.Title}}</h2>
+    {{partial "logo.html" .}}
+    <p><strong>If you have any questions, now is a good time to ask.</strong></p>
+    <p>
+      Thanks for listening
+      {{ with .Params.Author}}<br><small>{{.}}</small>{{end}}
+    </p>
+  </article>
+
 {{ end }}
 
 {{ define "footer" }}
