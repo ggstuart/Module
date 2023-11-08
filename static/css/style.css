@@ -86,8 +86,8 @@ header.main-header h1 {
 
 /* HERO */
 body.hero {
-    background: var(--accent-gradient);
-    --color: var(--clr-accent-text);
+    /* background: var(--accent-gradient); */
+    /* --color: var(--clr-accent-text); */
 }
 
 body.hero>header {
@@ -615,6 +615,11 @@ article.summary footer {
 article.summary h3 {
     margin: 0;
 }
+article.summary.unit {
+    background: var(--accent-gradient);
+    --color: var(--clr-accent-text);
+    border-color: var(--clr-accent2);
+}
 
 article.summary.lecture {
     background: var(--clr-slide-background);
@@ -694,7 +699,6 @@ a.next::after {
 }
 
 body > footer {
-    background: var(--background-gradient);
     font-weight: 400;
     background: var(--button-gradient);
     --color: var(--clr-button-text);
