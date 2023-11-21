@@ -520,7 +520,7 @@ li > code {
 }
 
 .highlight {
-    background-color: black;
+    background-color: #282c34;
     border: 0.25rem solid white;
     position: relative;
     overflow-x: auto;
