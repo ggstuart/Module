@@ -90,6 +90,9 @@ article.slide blockquote {
 article.slide .highlight {
     border: 0;
 }
+article.slide .highlight.large {
+    font-size: 1.3em;
+}
 
 article.slide .logo {
     width: 100%;
@@ -120,7 +123,18 @@ article.slide.title {
     place-items: center;
 }
 
+article.slide:not(.title) {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
 
+article.slide li {
+    text-align: left;
+}
+
+.youtube > iframe {
+    max-width: 900px;
+}
 /* CUSTOM SLIDES */
 
 /* simple slides */
