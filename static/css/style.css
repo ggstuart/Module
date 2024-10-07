@@ -743,6 +743,7 @@ footer:hover #theme {
 iframe {
     /* --color: var(--clr-primary-button); */
     /* --color: hsl(from var(--clr-primary-button) h s 10); */
+    background: white;
     max-width: 100%;
     border: 2px solid var(--clr-primary-button);
     border-top-width: 1.5em;
