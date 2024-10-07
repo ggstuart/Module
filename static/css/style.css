@@ -28,9 +28,10 @@
     --main-width: 1000px;
     --header-padding-inline: calc(calc(calc(100dvw - var(--main-width)) / 2) + var(--global-padding));
     --nav-gradient: linear-gradient(45deg,
-            var(--clr-primary-button), 15%,
-            transparent, 85%,
-            var(--clr-secondary-button))
+        var(--clr-primary-button), 15%,
+        transparent, 85%,
+        var(--clr-secondary-button)
+    );
 
 }
 @media (width >= 800px) {
