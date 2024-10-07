@@ -6,7 +6,7 @@
 @property --color {
     syntax: "<color>";
     inherits: true;
-    initial-value: red;
+    initial-value: black;
 }
 
 :root {
@@ -33,6 +33,9 @@
         var(--clr-secondary-button)
     );
 
+    --heading-font: "Ubuntu";
+    --text-font: "Rokkitt";
+    --code-font: "Ubuntu mono";
 }
 @media (width >= 800px) {
     :root {
@@ -50,7 +53,7 @@ h6 {
 }
 
 body {
-    font-family: "Rokkitt";
+    font-family: var(--text-font);
     font-weight: 300;
     margin: 0 auto;
     background: var(--clr-background);
@@ -86,10 +89,6 @@ header.main-header h1 {
 }
 
 /* HERO */
-body.hero {
-    /* background: var(--accent-gradient); */
-    /* --color: var(--clr-accent-text); */
-}
 
 body.hero>header {
     background: var(--button-gradient);
@@ -105,7 +104,7 @@ body.hero h1 {
     margin: 0;
 }
 body.hero main > .content p {
-    font-size: 1.4em;
+    font-size: 1.1em;
 }
 
 body.hero>footer {
@@ -115,7 +114,10 @@ body.hero>footer {
 
 
 body.hero header h1 .module-code {
+    font-family: var(--text-font);
     font-size: 2.9em;
+    letter-spacing: 12px;
+    text-shadow: 0 0 4px black;
 }
 
 body.hero h1 .module-code {
@@ -139,9 +141,6 @@ body.hero header a:has(.logo):hover {
     scale: 1;
 }
 
-body.hero header h1 .module-code {
-    text-shadow: 0 0 12px white;
-}
 @media (width>=350px) {
     body.hero header h1 {
         font-size: 1.3em;
@@ -170,7 +169,7 @@ em {
 /* Menu */
 
 header.main-header nav {
-    font-family: "ubuntu";
+    font-family: var(--heading-font);
     --button-size: 2rem;
     position: fixed;
     display: flex;
@@ -293,7 +292,7 @@ body.hero main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "ubuntu";
+    font-family: var(--heading-font);
     /* font-weight: 400; */
     text-wrap: balance;
     text-transform: uppercase;
@@ -510,7 +509,7 @@ button.copy-to-clipboard {
 }
 
 code {
-    font-family: "Ubuntu Mono";
+    font-family: var(--code-font);
     text-transform: none;
 }
 p > code,
@@ -692,7 +691,7 @@ a.next::after {
 @media (width >= 600px) {
 
     main {
-        font-size: 1.4em;
+        font-size: 1.2em;
     }
     p {
         line-height: 1.4;
