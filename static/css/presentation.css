@@ -28,6 +28,7 @@ footer {
 }
 article.slide {
     background: var(--clr-slide-background);
+    --color: var(--clr-slide-text);
     color: var(--clr-slide-text);
     filter: drop-shadow(0 0 0.5rem var(--clr-slide-text));
     position: absolute; 
@@ -214,12 +215,6 @@ body>footer {
 @media (width >=800px) {
     main {
         font-size: 1.4em;
-    }
-}
-
-@media (width >=1200px) {
-    main {
-        /* font-size: 1.6em; */
     }
 }
 
