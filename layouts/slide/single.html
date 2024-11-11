@@ -1,4 +1,4 @@
-<article class="slide {{ delimit .Params.Classes " " }}" aria-labelledby="slide-{{.Params.Order}}">
+<article class="slide {{with .Params.Classes}}{{ delimit . " " }}{{end}}" aria-labelledby="slide-{{.Params.Order}}">
     <h2 id="slide-{{.Params.Order}}">{{.Title}}</h2>
     <div class="content">
         {{ .Content }}
