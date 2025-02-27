@@ -373,16 +373,16 @@ pre {
 /* FIGURES */
 
 figure {
-    border: 0.25rem solid var(--clr-accent);
+    border: 3px solid var(--clr-primary-button);
     backdrop-filter: brightness(0.6);
     border-radius: 0.5rem;
-    background-color: var(--clr-accent);
-    --color: var(--clr-accent-text);
+    background: var(--button-gradient);
+    --color: var(--clr-button-text);
     color: var(--color);
     margin: 2em 0;
 }
 figure img {
-    border-radius: 0.5rem;
+    border-radius: 5px;
     margin: 0;
     width: 100%;
     /* background-color: white; */
@@ -473,7 +473,6 @@ img.logo {
     max-height: 9em;
 }
 .draft {
-    backdrop-filter: brightness(0.8);
     position: relative;
     overflow: hidden;
 }
@@ -482,11 +481,13 @@ img.logo {
     content: "draft";
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: 10em;
+    align-content: center;
+    text-align: center;
+    font-size: 12em;
     opacity: 0.2;
-    rotate: 0.125turn;
+    pointer-events: none;
+    z-index: 100;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='60' height='20' viewBox='0 0 60 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3ctext x='0' y='15' fill='grey'%3eDRAFT%3c/text%3e%3c/svg%3e ");
 }
 
 button {
