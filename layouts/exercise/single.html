@@ -45,17 +45,15 @@
 {{ if (.Page.Params.Mermaid) }}
 <script type="module">
     // import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    // import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({
         startOnLoad: true,
         er: {
             layoutDirection: 'LR',
             fontSize: '1em'
         },
-        theme: 'base',
-        themeVariables: {
-            primaryColor: "#EF652A"
-        }
+        theme: 'base'
     });
 </script>
 {{ end }}
