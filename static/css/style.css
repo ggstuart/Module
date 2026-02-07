@@ -76,12 +76,15 @@ header.main-header {
     background: var(--background-gradient);
     margin-inline: auto;
     padding: var(--global-padding) max(var(--global-padding), var(--header-padding-inline));
+    h1 {
+        font-size: 1em;
+        margin: 0 2rem 0 0;
+    }
+    .logo {
+        max-height: 2em;
+    }
 }
 
-header.main-header h1 {
-    font-size: 1em;
-    margin: 0 2rem 0 0;
-}
 @media (width>=600px) {
     header.main-header h1 {
         font-size: 1.3em;
@@ -129,13 +132,13 @@ body.hero h1 .with-colon::after {
     display: none;
 }
 
+header.unit .logo {
+    max-height: 9em;
+}
+
 body.hero header .logo {
     font-size: 3rem;
-    width: 100%;
-    padding: 1em;
-}
-body.hero header a:has(.logo) {
-    width: 100%;
+    max-height: 9em;
 }
 body.hero header a:has(.logo):hover {
     scale: 1;
@@ -470,7 +473,7 @@ img {
 }
 img.logo {
     min-height: 1.2em;
-    max-height: 9em;
+    /* max-height: 2em; */
 }
 .draft {
     position: relative;
