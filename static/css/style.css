@@ -9,9 +9,15 @@
     initial-value: black;
 }
 
+@property --color-slide-text {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: hsl(0, 10%, 10%);
+}
+
 :root {
     --clr-text: hsl(0, 70%, 95%);
-    --clr-slide-text: hsl(0, 10%, 10%);
+    /* --clr-slide-text: hsl(0, 10%, 10%); */
     --clr-slide-background: hsl(180, 20%, 90%);
     --clr-background: hsl(0, 20%, 20%);
     --clr-background2: hsla(0, 20%, 30%);
