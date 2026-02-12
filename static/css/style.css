@@ -289,6 +289,10 @@ main {
     margin-inline: auto;
     padding-inline: var(--global-padding);
     padding-block: 5em;
+
+    > img.logo {
+        max-height: 14em;
+    }
 }
 body.hero main {
     padding-top: 0;
