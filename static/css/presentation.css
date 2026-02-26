@@ -94,6 +94,9 @@ article.slide .highlight {
 article.slide .highlight.large {
     font-size: 1.3em;
 }
+article.slide .highlight.small {
+    font-size: 0.8em;
+}
 
 article.slide .logo {
     width: 100%;
