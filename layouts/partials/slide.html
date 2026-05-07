@@ -1,0 +1,10 @@
+
+{{with .page}}
+<article class="{{ delimit ( .Params.Classes | append "slide" ) " " }}" aria-labelledby="slide-{{$.slideNumber}}-title">
+    <h2 id="slide-{{$.slideNumber}}-title">{{.Title}}</h2>
+    <div class="content">
+        {{ .Content }}
+    </div>
+    <small class="slide-number">{{$.slideNumber}}</small>
+</article>
+{{end}}
