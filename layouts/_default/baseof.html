@@ -25,11 +25,11 @@
 
 </head>
 <body{{ block "bodyAttributes" . }}{{end}}>
-    <header class="main-header">
+    <header class="main-header" aria-labelledby="main-title">
         <a href="{{"" | absURL }}" aria-label="home">
 {{ partial "logo.html" .}}
         </a>
-        <h1>
+        <h1 id="main-title">
             <span class="with-colon module-code">{{ .Site.Params.ModuleCode }}</span>
             <span class="module-name">{{ .Site.Params.ModuleName }}</span>
         </h1>
