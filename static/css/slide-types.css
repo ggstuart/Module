@@ -31,6 +31,11 @@ article.slide:not(.title) {
     .content {
         display: grid;
         /* grid-template-rows: auto 1fr auto; */
+
+        p {
+            margin-block: 0;
+            align-content: center;
+        }
     }
 
     p:has(img) {
@@ -146,7 +151,6 @@ article.slide:not(.title) {
         > p {
             margin: 0;
             align-content: center;
-            background: var(--background-gradient);
             max-width: unset;
         }
     }
