@@ -36,26 +36,27 @@ article.slide:not(.title) {
             margin-block: 0;
             align-content: center;
         }
-    }
-
-    p:has(img) {
-        margin: 0;
-        display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: 1fr;
-        width: 100%;
-        max-width: 100%;
-
-        > img {
-            height: 100%;
+        p:has(img) {
+            margin: 0;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
             width: 100%;
-            max-height: 54dvh;
-            object-fit: cover;
-            object-position: center top;
-            /* background: var(--background-gradient); */
-            background: white;
+            max-width: 100%;
+            align-content: normal;
+    
+            > img {
+                height: 100%;
+                width: 100%;
+                /* max-height: 54dvh; */
+                object-fit: cover;
+                object-position: center top;
+                /* background: var(--background-gradient); */
+                background: white;
+            }
         }
     }
+
 
     figure {
         margin: 0;
