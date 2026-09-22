@@ -7,7 +7,7 @@
 
     
     <h3 id="lectures-heading">Lectures</h3>
-    <section class="grid" aria-labelled-by="lectures-heading">
+    <section class="grid" aria-labelledby="lectures-heading">
         {{with .GetPage "/lectures"}}
             {{ range (.Pages.ByParam "week") }}
                 {{.Render "summary"}}

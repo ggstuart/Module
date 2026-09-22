@@ -6,12 +6,12 @@
     {{ if .Param "display_toc" }}
         {{ .TableOfContents }}
     {{ end }}
-    <section aria-labelled-by="unit-heading">
+    <section aria-labelledby="unit-heading">
         {{ .Content }}
     </section>
     
     <h2 class="special" id="pages-heading">In this unit</h2>
-    <section class="grid" aria-labelled-by="pages-heading">
+    <section class="grid" aria-labelledby="pages-heading">
         {{range .Pages}}
             {{.Render "summary"}}
         {{ end }}
