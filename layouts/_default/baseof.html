@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{"css/style.css" | absURL }}">
     {{ block "css" . }}{{end}}
     {{ range .Site.Params.customcss }}
-        <link rel="stylesheet" href="{{ . | relURL }}">
+        <link rel="stylesheet" href="{{ . | absURL }}">
     {{- end }}
     {{ range .Resources.Match "*.css" }}
         <link rel="stylesheet" href="{{.RelPermalink}}">

@@ -2,8 +2,17 @@
   <link rel="stylesheet" href="{{"css/presentation.css" | absURL}}">
   <link rel="stylesheet" href="{{"css/slide-types.css" | absURL}}">
   {{ with site.Home.OutputFormats.Get "SlideLayouts" }}
-  <link rel="stylesheet" href="{{ .Permalink | absURL}}">
+    <link rel="stylesheet" href="{{ .Permalink | absURL}}">
   {{ end }}
+
+  {{ range $i, $slideRef := .Params.slides }}
+    {{ with $.Site.GetPage $slideRef }}
+      {{ range .Resources.Match "**.css" }}
+        <link rel="stylesheet" href="{{ .Permalink | absURL }}">
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
 {{end}}
 
 {{define "javascript"}}
