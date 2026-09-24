@@ -1,0 +1,16 @@
+{{ define "main" }}
+    <h2>{{.Title}}</h2>
+    {{ .Content }}
+    <section class="grid summary-grid">
+        {{ range (.Pages.ByParam "order") }}
+        {{ .Render "summary" }}
+        {{ end }}
+    </section>
+{{ end }}
+
+{{ define "footer" }}
+    <p>
+        These are the raw slides. 
+        Slides are composed into lectures.
+    </p>
+{{ end }}
