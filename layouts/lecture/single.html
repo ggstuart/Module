@@ -1,6 +1,9 @@
 {{define "css"}}
-<link rel="stylesheet" href="{{"css/presentation.css" | absURL}}">
-<link rel="stylesheet" href="{{"css/slide-types.css" | absURL}}">
+  <link rel="stylesheet" href="{{"css/presentation.css" | absURL}}">
+  <link rel="stylesheet" href="{{"css/slide-types.css" | absURL}}">
+  {{ with site.Home.OutputFormats.Get "SlideLayouts" }}
+  <link rel="stylesheet" href="{{ .Permalink | absURL}}">
+  {{ end }}
 {{end}}
 
 {{define "javascript"}}
@@ -19,26 +22,26 @@
     <h3>{{ .Content }}</h3>
     {{ with .Params.Author}}<small>{{.}}</small>{{end}}
   </article>
+
   <article class="slide contents" aria-label="contents">
     <h2>Contents</h2>
     {{partial "logo.html" .}}
     <ol>
       {{ range $index, $slide := .Params.Slides}}
-        {{with $.Resources.Get $slide}}
-          <li>{{.Title}}</li>
+        {{with $.Site.GetPage $slide}}
+        <li>{{.Title}}</li>
         {{ end }}
       {{ end }}
     </ol>
   </article>
-  {{/* loop over slides, capture index as well */}}
-  {{ range $index, $slide := .Params.Slides}}
-    {{/* get the actual slide resource */}}
-    {{with $.Resources.Get $slide}}
-      {{/* add one to the index and pass in as slideNumber */}}
-      {{$slideNumber := (add $index 1)}}
-      {{ partial "slide.html" (dict "page" . "slideNumber" $slideNumber) }}
-    {{end}}
+
+  {{/* loop over slides, display each one as a slide */}}
+  {{ range $i, $slideRef := .Params.slides }}
+    {{ with $.Site.GetPage $slideRef }}
+      {{ partial "slide.html" (dict "page" . "slideNumber" ( add $i 1 )) }}
+    {{ end }}
   {{ end }}
+
   <article class="slide title" aria-label="questions?">
     <h2>{{.Title}}</h2>
     {{partial "logo.html" .}}

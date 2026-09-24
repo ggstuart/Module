@@ -1,10 +1,18 @@
 
 {{with .page}}
-<article class="{{ delimit ( .Params.Classes | append "slide" ) " " }}" aria-labelledby="slide-{{$.slideNumber}}-title">
-    <h2 id="slide-{{$.slideNumber}}-title">{{.Title}}</h2>
-    <div class="content">
-        {{ .Content }}
-    </div>
+    {{ $classes := .Params.classes | default .Params.Classes | default slice }}
+    {{ with .Params.layout }}
+    {{range $k, $v := .}}
+    {{$class := partial "slide-layout-class.html" (dict "property" $k "value" $v)}}
+    {{ $classes = $classes | append $class }}
+    {{ end }}
+    {{ end }}
+    {{ $classes = $classes | append "slide" }}
+    <article class="{{ delimit $classes " " }}" aria-labelledby="slide-{{$.slideNumber}}-title">
+        <h2 id="slide-{{$.slideNumber}}-title">{{.Title}}</h2>
+        <div class="content">
+            {{ .Content }}
+        </div>
     <small class="slide-number">{{$.slideNumber}}</small>
 </article>
 {{end}}

@@ -17,6 +17,7 @@
                 padding: 0;
                 li {
                     background: var(--background-gradient);
+                    color: var(--clr-text);
                     border: 0.25px solid black;
                     border-radius: 4px;
                     padding: 0.25rem 0.5rem;

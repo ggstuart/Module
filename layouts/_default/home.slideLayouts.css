@@ -1,0 +1,36 @@
+{{- $seenCols := dict -}}
+{{- $seenRows := dict -}}
+{{- $seenGap := dict -}}
+{{- range where .Site.RegularPages "Type" "slide" -}}
+    {{- with .Params.layout -}}
+        {{- with .cols -}}
+            {{- $seenCols = merge $seenCols (dict . true) -}}
+        {{- end -}}
+        {{- with .rows -}}
+            {{- $seenRows = merge $seenRows (dict . true) -}}
+        {{- end -}}
+        {{- with .gap -}}
+            {{- $seenGap = merge $seenGap (dict . true) -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+@layer slide-layouts {    
+    article.slide:not(.title) {
+        @media(width > 500px) {
+{{ range $cols, $val := $seenCols }}{{ $class := partial "slide-layout-class.html" (dict "property" "cols" "value" $cols) }}
+            &.{{ $class }} .content {
+                grid-template-columns: {{ $cols }};
+            }
+{{end}}{{ range $rows, $val := $seenRows }}{{ $class := partial "slide-layout-class.html" (dict "property" "rows" "value" $rows) }}
+            &.{{ $class }} .content {
+                grid-template-rows: {{ $rows }};
+            }
+{{end}}{{ range $gap, $val := $seenGap }}{{ $class := partial "slide-layout-class.html" (dict "property" "gap" "value" $gap) }}
+            &.{{ $class }} .content {
+                gap: {{ $gap }};
+            }
+{{end}}
+        }
+    }
+}

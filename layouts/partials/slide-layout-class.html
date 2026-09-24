@@ -1,0 +1,10 @@
+{{- $property := .property | default "" -}}
+{{- $value := .value | default "" -}}
+{{/*  {{- $slug := replaceRE `([^a-zA-Z0-9])+` "-" $value | trim "-" -}}  */}}
+{{- $slug := replaceRE `\s+` "-" $value -}}
+{{- $slug = replaceRE "-+" "-" $slug -}}
+{{- if and $property $slug -}}
+  {{- printf "%s-%s" $property $slug -}}
+{{- else -}}
+  {{- "" -}}
+{{- end -}}
