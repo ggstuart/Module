@@ -411,12 +411,26 @@
     .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-        gap: 2rem;
+        gap: 1rem;
         margin-block: 3rem;
     }
     
     .grid.narrow {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .grid.summary-grid {
+        grid-auto-rows: auto;        
+        article.summary {
+            display: grid;
+            grid-row: span 3;
+            grid-template-rows: subgrid;
+            a {
+                display: grid;
+                grid-row: span 3;
+                grid-template-rows: subgrid;
+            }
+        }
     }
     
     ul {
@@ -693,6 +707,7 @@
     }
     
     .youtube > iframe {
+        box-sizing: border-box;
         width: 100%;
         aspect-ratio: 16/9;
         max-width: 600px;

@@ -74,7 +74,10 @@
     
     
         ul {
-            padding-left: 2em;
+            padding-inline: 1em;
+            li:has(blockquote) {
+                list-style: none;
+            }
         };
     }
     
