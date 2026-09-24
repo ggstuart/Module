@@ -625,54 +625,79 @@
         flex-direction: column;
         background: var(--button-gradient);
         --color: var(--clr-button-text);
-        border-radius: 0 5px 5px 0;
+        border-radius: 0.25em;
         border: 1px solid var(--clr-secondary-button);
-        border-left-width: 0.5rem;
         transition: 0.25s;
         font-size: 0.9em;
         padding: 0;
-    }
-    article.summary:hover {
-        scale: 1.01;
-        filter: brightness(1.1) drop-shadow(0 5px 10px hsla(0, 0%, 100%, 0.1));
-    }
-    article.summary a {
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        text-decoration: none;
-        padding: 0.5rem;
-        flex-grow: 1;
-    }
-    article.summary footer {
-        display: flex;
-        justify-content: flex-end;
-    }
-    article.summary h3 {
-        margin: 0;
-    }
-    article.summary.unit {
-        background: var(--accent-gradient);
-        --color: var(--clr-accent-text);
-        border-color: var(--clr-accent2);
-    }
+
+        &:hover {
+            scale: 1.01;
+            filter: brightness(1.1) drop-shadow(0 5px 10px hsla(0, 0%, 100%, 0.1));
+
+        }
+
+        > a {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            text-decoration: none;
+            padding: 0.5rem;
+            flex-grow: 1;
+        }
+
+        h3 {
+            margin: 0;
+            border-bottom-width: 1px;
+
+        }
+
+        footer {
+            display: flex;
+            justify-content: end;
+        }
+
+        &.unit {
+            background: var(--accent-gradient);
+            --color: var(--clr-accent-text);
+            border-color: var(--clr-accent2);
+        }
+
+        &.slide,
+        &.lecture {
+            background: var(--clr-slide-background);
+            --color: var(--clr-slide-text);
+            text-align: center;
+            border-color: var(--clr-slide-text);
+            /* overflow: hidden; */
+            
+            h3 {
+                border-width: 0;
+            }
     
+            .logo {
+                max-width: 50%;
+                margin-top: 1em;
+            }
+    
+            &:hover {
+                filter: drop-shadow(0 0 5px var(--clr-text));
+            }
+
+        }
+
+    }
+
+
+    article.summary.slide,
     article.summary.lecture {
-        background: var(--clr-slide-background);
-        --color: var(--clr-slide-text);
-        border-radius: 0.25em;
-        text-align: center;
-        overflow: hidden;
-        border-width: 0;
+
     }
     .grid article.summary.lecture:hover {
-        filter: drop-shadow(0 0 5px var(--clr-text));
     }
+
     article.summary.lecture h3 {
-        border-width: 0;
     }
     .grid article.summary.lecture .logo {
-        max-width: 50%;
-        margin-top: 1em;
     }
     
     .pagination {
