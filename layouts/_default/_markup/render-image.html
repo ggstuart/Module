@@ -1,1 +1,22 @@
-<img src="{{ .Destination | absURL | safeURL }}" alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }} loading="lazy"/>
+{{- $alt := .PlainText | safeHTML -}}
+{{- $destination := .Destination -}}
+{{- $img := "" -}}
+
+{{- if or (hasPrefix $destination "http://") (hasPrefix $destination "https://") (hasPrefix $destination "//") -}}
+  {{- $img = $destination -}}
+{{- else if .Page.Resources.GetMatch $destination -}}
+  {{- $img = (.Page.Resources.GetMatch $destination).RelPermalink -}}
+{{- else if resources.GetMatch $destination -}}
+  {{- $img = (resources.GetMatch $destination).RelPermalink -}}
+{{- else -}}
+  {{- $img = $destination | relURL -}}
+{{- end -}}
+{{- $img = $img | safeURL -}}
+
+<img 
+    src="{{ $img }}" 
+    alt="{{ $alt }}"
+    {{ with .Title }} title="{{ . }}" {{ end }} 
+    loading="lazy" 
+    decoding="async" />
+

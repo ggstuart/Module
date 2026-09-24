@@ -13,7 +13,7 @@ tags = [
   "teaching"
 ]
 features = []
-min_version = "0.115.0"
+min_version = "0.165.0"
 
 [author]
   name = "Graeme Stuart"

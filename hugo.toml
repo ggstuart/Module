@@ -5,3 +5,13 @@
 [markup.highlight]
     noClasses = false
     linenos = true
+
+[outputs]
+    _merge = "deep"
+    home = ["html", "slideLayouts"]
+
+[outputFormats.slideLayouts]
+    _merge = "deep"
+    mediaType = "text/css"
+    baseName = "css/slide-layouts"
+    isPlainText = true
