@@ -271,7 +271,9 @@
     nav.breadcrumbs {
         /* font-size: 0.8em; */
         display: flex;
+        align-items: center;
         overflow-x: auto;
+        gap: 1ch;
         /* --link-color: var(--clr-background); */
         /* background-color: var(--clr-accent); */
         /* background: var(--accent-gradient); */
@@ -279,12 +281,15 @@
     }
     nav.breadcrumbs a {
         text-decoration: none;
-        padding: 0.125em;
-        border-radius: 3px;
+        /* padding: 0.125em; */
+        /* border-radius: 3px; */
         flex-shrink: 0;
+        display: flex;
+        gap: 1ch;
     }
+
     nav.breadcrumbs a:not(:last-child)::after {
-        content: " >";
+        content: ">";
     }
     
     body.hero nav.breadcrumbs {
