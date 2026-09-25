@@ -40,10 +40,10 @@
             <a href="{{.RelPermalink}}">{{.Title | title }}</a>
             {{end}}
             {{range .CurrentSection.Pages.GroupBy "Type"}}
-            <h2>{{.Key | pluralize}}</h2>
-            {{range .Pages}}
-                <a href="{{.RelPermalink}}">{{.Title | title }}</a>
-            {{end}}
+                <h2>{{.Key | pluralize}}</h2>
+                {{range .Pages}}
+                    <a href="{{.RelPermalink}}">{{.Title | title }}</a>
+                {{end}}
             {{end}}
         </nav>
     </header>

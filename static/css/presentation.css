@@ -11,7 +11,6 @@
     }
     
     header, nav.breadcrumbs {
-        padding-block: 0.5rem;
         width: 100dvw;
     }
     main {
@@ -47,9 +46,8 @@
     }
     @media (width >= 1200px) {
         article.slide {
-            /* padding: 1rem; */
             border-radius: 0.5em;
-            margin: 1rem auto;
+            margin: 0 auto 1rem auto;
         }
     }
     
