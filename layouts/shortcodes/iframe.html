@@ -1,6 +1,15 @@
-{{ range .Page.Resources.Match "**.html" }}
-    {{ (.Content | resources.FromString .Path).Publish }}
-{{ end }}
-<iframe loading="lazy" {{- range $k, $v :=.Params -}} {{- (printf " %s=%q" $k $v) | safeHTMLAttr -}} {{- end -}}>
+{{- $src := .Params.src -}}
+{{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "//") -}}
+    {{/*  do nothing  */}}
+{{- else if .Page.Resources.GetMatch $src -}}
+    {{- $src = (.Page.Resources.GetMatch $src).RelPermalink -}}
+{{- else if resources.GetMatch $src -}}
+    {{- $src = (resources.GetMatch $src).RelPermalink -}}
+{{- else -}}
+    {{- $src = $src | relURL -}}
+{{- end -}}
+{{- $src = $src | safeURL | absURL -}}
+{{- $params := merge .Params ( dict "src" $src ) }}
+<iframe loading="lazy" {{- range $k, $v :=$params -}} {{- (printf " %s=%q" $k $v) | safeHTMLAttr -}} {{- end -}}>
     {{- .Inner | .Page.RenderString -}}
 </iframe>

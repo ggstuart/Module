@@ -187,15 +187,19 @@
             }
         }
     
-
-    
         &.block-burger .content {
-            blockquote:first-of-type,
-            blockquote:last-of-type {
+            > blockquote {
+                grid-column: 1/-1;
+            }
+        }
+        
+        &.p-burger .content {
+            > p {
                 grid-column: 1/-1;
             }
         }
     
+
         &.tight-quotes .content { 
             blockquote p {
                 margin-block: 0.125em;

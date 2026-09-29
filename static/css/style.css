@@ -573,6 +573,10 @@
         position: relative;
         overflow-x: auto;
     }
+    .highlight.massive { font-size: 1.4em; }
+    .highlight.large { font-size: 1.2em; }
+    .highlight.small { font-size: 0.8em; }
+    .highlight.tiny { font-size: 0.6em; }
     
     .chroma {
         padding: 0.5rem 0.25rem;
@@ -581,6 +585,7 @@
     .chroma .line,
     .chroma .lnt {
         display:block;
+        text-wrap: nowrap;
     }
     
     .chroma .hl {

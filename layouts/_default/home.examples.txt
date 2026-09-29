@@ -1,0 +1,13 @@
+{{ range site.RegularPages }}
+    {{ $name := .Name }}
+    {{ range .Resources.Match "**.html" }}
+        {{ warnf "Publishing: %s (Page: %s)" .Name $name  }}
+        {{ .Permalink }}
+    {{ end }}
+{{ end }}
+
+{{ range resources.Match "examples/**" }}
+    {{ warnf "Publishing: %s" .Name }}
+    {{ .Publish }}
+{{ end }}
+
