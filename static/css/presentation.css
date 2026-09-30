@@ -31,7 +31,6 @@
         background: var(--clr-slide-background);
         --color: var(--clr-slide-text);
         color: var(--clr-slide-text);
-        filter: drop-shadow(0 0 0.5rem var(--clr-slide-text));
         position: absolute; 
         inset: 0;
         padding: 0;
@@ -46,8 +45,9 @@
     }
     @media (width >= 1200px) {
         article.slide {
+            filter: drop-shadow(0 0 2px var(--clr-slide-text));
             border-radius: 0.5em;
-            margin: 0 auto 1rem auto;
+            margin: 2px auto 1rem auto;
         }
     }
     
