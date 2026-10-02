@@ -190,7 +190,10 @@
     blockquote, 
     article, 
     nav#TableOfContents {
-        padding: var(--global-padding);
+        padding-inline: var(--global-padding);
+    }
+    blockquote {
+        padding-block: 0.5rem;
     }
     
     
@@ -253,7 +256,7 @@
     
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--heading-font);
-        /* font-weight: 400; */
+        font-weight: 400;
         text-wrap: balance;
         text-transform: uppercase;
         border-color: var(--color);
@@ -262,10 +265,10 @@
     }
     h2, h3, h4 {
         margin-top: 3em;
-        border-bottom-width: 6px;
+        border-bottom-width: 3px;
     }
     h3, h4 {
-        border-bottom-width: 3px;
+        border-bottom-width: 2px;
     }
     h4, h5, h6 {
         font-weight: 600;
@@ -282,35 +285,37 @@
             grid-template-columns: 1fr;
             place-items: center;
             text-align: center;
-            padding: 1rem;
+            padding: 1rem var(--global-padding);
             min-height: 90dvh;
 
             h1 {
                 margin: 0;
+                line-height: 1;
+                font-size: 1em;
                 .module-code {
-                    font-family: var(--text-font);
-                    font-size: 2.9em;
+                    /* font-family: var(--text-font); */
+                    font-size: 2.4em;
                     letter-spacing: 12px;
-                    text-shadow: 0 0 4px black;
+                    text-shadow: 0 0 0.1em var(--clr-button-text);
                     display: block;
                     font-weight: 600;
+                }
+                .module-name {
+                    text-wrap: nowrap;
                 }
                 .with-colon::after {
                     display: none;
                 }
 
                 
-                @media (width>=350px) {
+                @media (width>=400px) {
                     font-size: 1.3em;
                 }
                 @media (width>=450px) {
                     font-size: 1.6em;
                 }
-                @media (width>=650px) {
-                    font-size: 2em;
-                }
-                @media (width>=800px) {
-                    font-size: 3em;
+                @media (width>=900px) {
+                    font-size: 1.8em;
                 }
             }
 
@@ -321,6 +326,7 @@
                 max-height: 50dvh;
                 width: 90%;
                 max-width: 100%;
+                filter: drop-shadow(0 0 6px var(--clr-button-text));
             }
         }
         nav.breadcrumbs {
@@ -349,6 +355,11 @@
         + nav.pagination {
             margin-bottom: 1rem;
         }
+    }
+
+    h2.special:has(+nav.pagination) {
+        border-bottom: none;
+        margin-bottom: 0;
     }
     
     a {
@@ -635,7 +646,7 @@
     }
     pre.mermaid {
         /* background-color: white; */
-        padding: var(--global-padding); 
+        padding-inline: var(--global-padding); 
     }
     
     article.summary {
@@ -705,48 +716,39 @@
 
     }
 
-
-    article.summary.slide,
-    article.summary.lecture {
-
-    }
-    .grid article.summary.lecture:hover {
-    }
-
-    article.summary.lecture h3 {
-    }
-    .grid article.summary.lecture .logo {
-    }
-    
     .pagination {
         background: var(--accent-gradient);
         --color: var(--clr-accent-text);
-        padding: var(--global-padding);
+        padding: 0.5rem var(--global-padding);
         display: flex;
         flex-wrap: wrap;
         gap: 0 1em;
         justify-content: space-between;
         align-items: center;
-    }
-    .pagination a {
-        text-decoration: none;
-    }
-    a.prev, a.next {
-        flex-grow: 1;
-    }
-    a.next {
-        text-align: right;
-    }
-    a.prev::before,
-    a.next::after {
-        line-height: 0;
-        font-size: 2em;
-    }
-    a.prev::before {
-        content: "←";
-    }
-    a.next::after {
-        content: "→";
+        &:empty {
+            display: none;
+        }
+        a {
+            text-decoration: none;
+            &.prev, 
+            &.next {
+                flex-grow: 1;
+            }
+            &.next {
+                text-align: right;
+            }
+            &.prev::before,
+            &.next::after {
+                line-height: 0;
+                font-size: 2em;
+            }
+            &.prev::before {
+                content: "←";
+            }
+            &.next::after {
+                content: "→";
+            }
+        }
     }
     
     .youtube > iframe {
@@ -782,7 +784,7 @@
         background: var(--button-gradient);
         --color: var(--clr-button-text);
         margin-inline: auto;
-        padding: var(--global-padding) max(var(--global-padding), var(--header-padding-inline));
+        padding: 0.5rem max(var(--global-padding), var(--header-padding-inline));
     }
     
     ul.grid {
