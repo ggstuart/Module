@@ -3,12 +3,12 @@
 <header class="exercise">
     <h2 class="special">{{.Title}}</h2>
     <nav class="pagination">
-        {{ with .CurrentSection.RegularPages.Next . }}
+        {{- with .CurrentSection.RegularPages.Next . -}}
         <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
-        {{end}}
-        {{ with .CurrentSection.RegularPages.Prev . }}
+        {{- end -}}
+        {{- with .CurrentSection.RegularPages.Prev . -}}
         <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
-        {{end}}
+        {{- end -}}
     </nav>
 </header>
 
@@ -31,12 +31,12 @@
     {{end}}
 
     <nav class="pagination">
-        {{ with .CurrentSection.RegularPages.Next . }}
+        {{- with .CurrentSection.RegularPages.Next . -}}
         <a class="prev" href="{{.RelPermalink}}">{{.Title}}</a>
-        {{end}}
-        {{ with .CurrentSection.RegularPages.Prev . }}
+        {{- end -}}
+        {{- with .CurrentSection.RegularPages.Prev . -}}
         <a class="next" href="{{.RelPermalink}}">{{.Title}}</a>
-        {{end}}
+        {{- end -}}
     </nav>
 {{ end }}
 

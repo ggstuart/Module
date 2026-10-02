@@ -264,15 +264,19 @@
         border-width: 0;
     }
     h2, h3, h4 {
-        margin-top: 3em;
+        margin-top: 3em;        
+    }
+    h2 {
         border-bottom-width: 3px;
     }
-    h3, h4 {
+    h3 {
         border-bottom-width: 2px;
     }
     h4, h5, h6 {
-        font-weight: 600;
-        text-transform: none;
+        margin-bottom: 0.5em;
+        border-bottom-width: 1px;
+        font-weight: 300;
+        /* text-transform: none; */
     }
     
     
@@ -352,12 +356,12 @@
         padding: 1rem 0 .5rem;
         border-color: var(--clr-accent);
         transition: backdrop-filter 400ms;
-        + nav.pagination {
+        + nav.pagination:not(:empty) {
             margin-bottom: 1rem;
         }
     }
 
-    h2.special:has(+nav.pagination) {
+    h2.special:has(+nav.pagination:not(:empty)) {
         border-bottom: none;
         margin-bottom: 0;
     }
@@ -630,12 +634,21 @@
         background-blend-mode: luminosity;
     }
     
+    .chroma:has(code.language-http)::before {
+        background-image: url(../images/HTTP_logo.svg);
+        background-size: 3em;
+    }
     .chroma:has(code.language-css)::before {
         background-image: url(../images/css3_badge.svg);
     }
     .chroma:has(code.language-html)::before {
         background-image: url(../images/html5_badge.svg);
     }
+    .chroma:has(code.language-json)::before {
+        background-image: url(../images/JSON_vector_logo.svg);
+    }
+    .chroma:has(code.language-javascript)::before,
+    .chroma:has(code.language-JavaScript)::before,
     .chroma:has(code.language-js)::before {
         background-image: url(../images/javascript_badge.svg);
     }
@@ -725,9 +738,6 @@
         gap: 0 1em;
         justify-content: space-between;
         align-items: center;
-        &:empty {
-            display: none;
-        }
         a {
             text-decoration: none;
             &.prev, 
@@ -749,7 +759,11 @@
                 content: "→";
             }
         }
+        &:empty {
+            display: none;
+        }
     }
+
     
     .youtube > iframe {
         box-sizing: border-box;
