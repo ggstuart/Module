@@ -42,9 +42,8 @@
         /* place-items: center; */
         overflow-x: hidden;
         overflow-y: auto;
-    }
-    @media (width >= 1200px) {
-        article.slide {
+
+        @media (width >= 1200px) {
             filter: drop-shadow(0 0 2px var(--clr-slide-text));
             border-radius: 0.5em;
             margin: 2px auto 1rem auto;
