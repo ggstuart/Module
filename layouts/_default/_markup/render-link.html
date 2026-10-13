@@ -1,4 +1,19 @@
-<a href="{{ .Destination | safeURL }}" 
+{{- $destination := .Destination -}}
+{{- $href := "" -}}
+
+{{- if or (hasPrefix $destination "http://") (hasPrefix $destination "https://") (hasPrefix $destination "//") -}}
+    {{- $href = $destination -}}
+{{- else if .Page.Resources.GetMatch $destination -}}
+    {{- $href = (.Page.Resources.GetMatch $destination).RelPermalink -}}
+{{- else if resources.GetMatch $destination -}}
+    {{- $href = (resources.GetMatch $destination).RelPermalink -}}
+{{- else -}}
+    {{- $href = $destination | relURL -}}
+{{- end -}}
+{{- $href = $href | safeURL -}}
+
+
+<a href="{{ $href }}" 
     {{ with .Title }} title="{{ . }}" {{ end }}
     {{ if strings.HasPrefix .Destination "http" }} target="_blank" {{ end }}
 >{{ .Text }}</a>
