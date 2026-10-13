@@ -11,3 +11,8 @@
     {{ .Publish }}
 {{ end }}
 
+{{ range resources.Match "images/icons/**" }}
+    {{ warnf "Publishing: %s" .Name }}
+    {{ .Publish }}
+{{ end }}
+
