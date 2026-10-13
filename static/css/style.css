@@ -690,7 +690,7 @@
         h3 {
             margin: 0;
             border-bottom-width: 1px;
-
+            place-self: end stretch;
         }
 
         footer {

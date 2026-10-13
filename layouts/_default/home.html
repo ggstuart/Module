@@ -8,7 +8,7 @@
 
     <section aria-labelledby="units">
         <h2 id="units">Units</h2>
-        <div class="grid">
+        <div class="grid summary-grid">
             {{ range where .Sections "Type" "unit"}}
             {{.Render "summary"}}
             {{ end }}
