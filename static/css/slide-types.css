@@ -33,10 +33,9 @@
         }
         .content {
             display: grid;
-            /* grid-template-rows: auto 1fr auto; */
-    
+
             p {
-                margin-block: 0.25em;
+                margin: 0.25em 0;
                 align-content: center;
             }
             p:has(img) {
@@ -86,32 +85,27 @@
     
     article.slide:not(.title) {
         @media(width > 500px) {
-            &.even .content {
-                grid-template-columns: 1fr 1fr;
-            }
-            &.even-3 .content {
-                grid-template-columns: 1fr 1fr 1fr;
+
+            &.top-bun,
+            &.burger {
+                .content > :first-child {
+                    grid-column: 1 / -1;
+                }
             }
 
-            &.one-two .content {
-                grid-template-columns: 1fr 2fr;
+            &.bottom-bun,
+            &.burger {
+                .content > :last-child {
+                    grid-column: 1 / -1;
+                }
             }
 
-            &.one-two-one .content {
-                grid-template-columns: 1fr 2fr 1fr;
-            }
-
-            &.one-three-one .content {
-                grid-template-columns: 1fr 2fr 1fr;
-            }
-
-            &.burger .content {
-                grid-auto-rows: min-content 1fr min-content;
+            /* &.burger .content {
                 >:first-child,
                 >:last-child {
                     grid-column: 1 / -1;
                 }
-            }
+            } */
         }
         &.contain p:has(img) img {
             object-fit: contain;
@@ -136,39 +130,6 @@
     
         &.img-25vh p:has(img) img {
             max-height: 25vh;
-        }
-    
-    
-        &.auto-one .content {
-            grid-template-columns: auto 1fr;
-        }
-    
-        &.auto-auto .content {
-            grid-template-columns: auto auto;
-        }
-    
-
-    
-        &.one-three .content {
-            grid-template-columns: 1fr 3fr;
-        }
-        &.two-three .content {
-            grid-template-columns: 2fr 3fr;
-        }
-        &.two-one .content {
-            grid-template-columns: 2fr 1fr;
-        }
-    
-        &.three-two .content {
-            grid-template-columns: 3fr 2fr;
-        }
-    
-        &.three-one .content {
-            grid-template-columns: 3fr 1fr;
-        }
-    
-        &.three-five .content {
-            grid-template-columns: 3fr 5fr;
         }
     
         &.auto-rows .content {
