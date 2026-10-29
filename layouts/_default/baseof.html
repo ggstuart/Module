@@ -52,9 +52,7 @@
         {{ block "main" .}}{{ end }}
     </main>
     <footer>
-        {{ block "footer" .}}
-        <p>This is the default footer</p>
-        {{ end }}
+        {{ block "footer" . }}{{ end }}
         <p id="theme">
             <a target="_blank" href="https://github.com/ggstuart/module">
                 module theme
