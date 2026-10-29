@@ -6,7 +6,7 @@
   {{ end }}
 
   {{ range $i, $slideRef := .Params.slides }}
-    {{ with $.Site.GetPage $slideRef }}
+    {{ with partial "find-slide.html" (dict "lecture" $ "ref" $slideRef) }}
       {{ range .Resources.Match "**.css" }}
         <link rel="stylesheet" href="{{ .Permalink | absURL }}">
       {{ end }}
@@ -37,7 +37,7 @@
     {{partial "logo.html" .}}
     <ol>
       {{ range $index, $slide := .Params.Slides}}
-        {{with $.Site.GetPage $slide}}
+        {{with partial "find-slide.html" (dict "lecture" $ "ref" $slide)}}
         <li>{{.Title}}</li>
         {{ end }}
       {{ end }}
@@ -46,7 +46,7 @@
 
   {{/* loop over slides, display each one as a slide */}}
   {{ range $i, $slideRef := .Params.slides }}
-    {{ with $.Site.GetPage $slideRef }}
+    {{ with partial "find-slide.html" (dict "lecture" $ "ref" $slideRef) }}
       {{ partial "slide.html" (dict "page" . "slideNumber" ( add $i 1 )) }}
     {{ end }}
   {{ end }}

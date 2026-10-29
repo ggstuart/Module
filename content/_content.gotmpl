@@ -1,0 +1,12 @@
+{{/*
+  Adds a "slide usage report" page, but only in development
+  (i.e. when you run `hugo server`). It is never part of a production build.
+  View it at /slide-usage/
+*/}}
+{{ if hugo.IsDevelopment }}
+  {{ $.AddPage (dict
+    "path" "slide-usage"
+    "title" "Slide usage report"
+    "type" "slide-usage"
+  ) }}
+{{ end }}

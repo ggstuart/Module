@@ -1,7 +1,15 @@
 {{- $seenCols := dict -}}
 {{- $seenRows := dict -}}
 {{- $seenGap := dict -}}
-{{- range where .Site.RegularPages "Type" "slide" -}}
+{{- /* All slide pages, plus every slide that a lecture uses (this includes slides kept in a lecture's own folder) */ -}}
+{{- $slidePages := where .Site.RegularPages "Type" "slide" -}}
+{{- range where .Site.Home.RegularPagesRecursive "Type" "lecture" -}}
+    {{- $lecture := . -}}
+    {{- range .Params.slides -}}
+        {{- with partial "find-slide.html" (dict "lecture" $lecture "ref" .) -}}{{- $slidePages = $slidePages | append . -}}{{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- range $slidePages -}}
     {{- with .Params.layout -}}
         {{- with .cols -}}
             {{- $seenCols = merge $seenCols (dict . true) -}}

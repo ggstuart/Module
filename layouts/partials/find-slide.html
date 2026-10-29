@@ -1,0 +1,23 @@
+{{- /*
+  Finds one slide for a lecture.
+  Call it with: partial "find-slide.html" (dict "lecture" $lecture "ref" "slides/foo.md")
+
+  A ref in a lecture's `slides:` list can be:
+  - a full path to a shared slide page, e.g. "/slides/welcome/www.md"
+  - a path inside the lecture's own folder, e.g. "slides/dom.md"
+
+  Shared pages are tried first (exactly as before). If that finds nothing
+  and the ref is relative, we look in the lecture's own folder.
+  Returns the slide, or "" if nothing matches.
+*/ -}}
+{{- $lecture := .lecture -}}
+{{- $ref := .ref -}}
+{{- $slide := site.GetPage $ref -}}
+{{- if and (not $slide) (not (hasPrefix $ref "/")) -}}
+  {{- with $lecture.Resources.GetMatch $ref -}}
+    {{- /* Remember the lecture, so links and images in the slide can find the lecture's files */ -}}
+    {{- .Store.Set "lecture" $lecture -}}
+    {{- $slide = . -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($slide | default "") -}}
