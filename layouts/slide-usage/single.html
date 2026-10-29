@@ -1,0 +1,84 @@
+{{/*
+  Slide usage report (development only: see content/_content.gotmpl).
+  Goes through every lecture's `slides:` list, finds each slide exactly as the
+  lecture layout does (partials/find-slide.html), and counts the uses.
+  - shared slide: a page somewhere in content/ (e.g. /slides/welcome/www.md)
+  - local slide: a file in the lecture's own folder (e.g. slides/dom.md)
+*/}}
+{{ define "main" }}
+
+{{/* 1. Walk every lecture and record which lectures use which slide */}}
+{{ $uses := dict }}      {{/* slide key -> slice of lectures using it */}}
+{{ $found := dict }}     {{/* slide key -> dict(page, kind) */}}
+{{ $broken := slice }}   {{/* refs that don't find a slide */}}
+{{ $lectures := where site.Home.RegularPagesRecursive "Type" "lecture" }}
+{{ range $lectures }}
+  {{ $lecture := . }}
+  {{ range .Params.slides }}
+    {{ $ref := . }}
+    {{ with partial "find-slide.html" (dict "lecture" $lecture "ref" $ref) }}
+      {{/* find-slide.html marks slides from a lecture's own folder with the lecture */}}
+      {{ $kind := cond (isset .Store.Values "lecture") "local" "shared" }}
+      {{ $key := cond (eq $kind "shared") .Path (printf "%s#%s" $lecture.Path $ref) }}
+      {{ $found = merge $found (dict $key (dict "page" . "kind" $kind)) }}
+      {{ $uses = merge $uses (dict $key ((index $uses $key) | default slice | append $lecture)) }}
+    {{ else }}
+      {{ $broken = $broken | append (dict "ref" $ref "lecture" $lecture) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* 2. Shared slide pages that no lecture uses */}}
+{{ $shared := where site.Home.RegularPagesRecursive "Type" "slide" }}
+{{ $unused := slice }}
+{{ range $shared }}
+  {{ if not (index $uses .Path) }}{{ $unused = $unused | append . }}{{ end }}
+{{ end }}
+
+{{/* 3. Used slides, most used first */}}
+{{ $counted := slice }}
+{{ range $key, $l := $uses }}
+  {{ $f := index $found $key }}
+  {{ $counted = $counted | append (dict "page" $f.page "kind" $f.kind "count" (len $l) "lectures" $l) }}
+{{ end }}
+{{ $counted = sort $counted "count" "desc" }}
+{{ $localCount := len (where $counted "kind" "local") }}
+
+{{/* Console warnings (only ever shown under hugo server) */}}
+{{ range $broken }}{{ warnf "slide-usage: %q in %s does not find a slide" .ref .lecture.File.Path }}{{ end }}
+{{ with $unused }}{{ warnf "slide-usage: %d shared slide(s) are not used by any lecture (see /slide-usage/)" (len .) }}{{ end }}
+
+<h2 class="special">{{ .Title }}</h2>
+<p>
+  {{ len $lectures }} lectures use {{ len $counted }} slides
+  ({{ sub (len $counted) $localCount }} shared, {{ $localCount }} in a lecture's own folder).
+  {{ len $unused }} shared slide(s) unused, {{ len $broken }} broken reference(s).
+  This page only exists under <code>hugo server</code>.
+</p>
+
+<h3>Broken references ({{ len $broken }})</h3>
+{{ with $broken }}
+<table>
+  <tr><th>Reference</th><th>In lecture</th></tr>
+  {{ range . }}<tr><td><code>{{ .ref }}</code></td><td><a href="{{ .lecture.RelPermalink }}">{{ .lecture.Title }}</a> <small>({{ .lecture.File.Path }})</small></td></tr>{{ end }}
+</table>
+{{ else }}<p>None.</p>{{ end }}
+
+<h3>Unused shared slides ({{ len $unused }})</h3>
+{{ with $unused }}
+<ul>{{ range sort . "Path" }}<li>{{ .Title }} <small><code>{{ .File.Path }}</code></small></li>{{ end }}</ul>
+{{ else }}<p>None.</p>{{ end }}
+
+<h3>Used slides, most used first ({{ len $counted }})</h3>
+<table>
+  <tr><th>Uses</th><th>Slide</th><th>Where it lives</th><th>Lectures</th></tr>
+  {{ range $counted }}
+  <tr>
+    <td>{{ .count }}</td>
+    <td>{{ .page.Title }}</td>
+    <td>{{ .kind }} <small><code>{{ with .page.File }}{{ .Path }}{{ end }}</code></small></td>
+    <td>{{ range $i, $l := .lectures }}{{ if $i }}, {{ end }}<a href="{{ $l.RelPermalink }}">{{ $l.Title }}</a>{{ end }}</td>
+  </tr>
+  {{ end }}
+</table>
+{{ end }}
