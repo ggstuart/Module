@@ -1,8 +1,16 @@
 {{- $src := .Params.src -}}
+{{- /* For a slide kept in a lecture's own folder (see find-slide.html), look for the file in the lecture's folder. "examples/flow" also finds "examples/flow/index.html". */ -}}
+{{- $lectureFile := "" -}}
+{{- with .Page.Store.Get "lecture" -}}
+    {{- $local := strings.TrimPrefix "./" $src -}}
+    {{- $lectureFile = or (.Resources.GetMatch $local) (.Resources.GetMatch (path.Join $local "index.html")) -}}
+{{- end -}}
 {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "//") -}}
     {{/*  do nothing  */}}
 {{- else if .Page.Resources.GetMatch $src -}}
     {{- $src = (.Page.Resources.GetMatch $src).RelPermalink -}}
+{{- else if $lectureFile -}}
+    {{- $src = $lectureFile.RelPermalink -}}
 {{- else if resources.GetMatch $src -}}
     {{- $src = (resources.GetMatch $src).RelPermalink -}}
 {{- else -}}

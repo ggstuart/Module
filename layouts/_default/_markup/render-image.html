@@ -1,3 +1,4 @@
+{{- $lecture := .Page.Store.Get "lecture" -}} {{- /* set by find-slide.html for slides kept in a lecture's own folder */ -}}
 {{- $alt := .PlainText | safeHTML -}}
 {{- $destination := .Destination -}}
 {{- $img := "" -}}
@@ -6,6 +7,9 @@
   {{- $img = $destination -}}
 {{- else if .Page.Resources.GetMatch $destination -}}
   {{- $img = (.Page.Resources.GetMatch $destination).RelPermalink -}}
+{{- else if and $lecture ($lecture.Resources.GetMatch (strings.TrimPrefix "./" $destination)) -}}
+    {{- /* a slide kept in a lecture's own folder: look in the lecture's files */ -}}
+    {{- $img = ($lecture.Resources.GetMatch (strings.TrimPrefix "./" $destination)).RelPermalink -}}
 {{- else if resources.GetMatch $destination -}}
   {{- $img = (resources.GetMatch $destination).RelPermalink -}}
 {{- else -}}

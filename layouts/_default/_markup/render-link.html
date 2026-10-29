@@ -1,3 +1,4 @@
+{{- $lecture := .Page.Store.Get "lecture" -}} {{- /* set by find-slide.html for slides kept in a lecture's own folder */ -}}
 {{- $destination := .Destination -}}
 {{- $href := "" -}}
 
@@ -5,6 +6,9 @@
     {{- $href = $destination -}}
 {{- else if .Page.Resources.GetMatch $destination -}}
     {{- $href = (.Page.Resources.GetMatch $destination).RelPermalink -}}
+{{- else if and $lecture ($lecture.Resources.GetMatch (strings.TrimPrefix "./" $destination)) -}}
+    {{- /* a slide kept in a lecture's own folder: look in the lecture's files */ -}}
+    {{- $href = ($lecture.Resources.GetMatch (strings.TrimPrefix "./" $destination)).RelPermalink -}}
 {{- else if resources.GetMatch $destination -}}
     {{- $href = (resources.GetMatch $destination).RelPermalink -}}
 {{- else -}}
