@@ -1,7 +1,14 @@
 {{- $destination := .Destination -}}
 {{- $href := "" -}}
 
-{{- if or (hasPrefix $destination "http://") (hasPrefix $destination "https://") (hasPrefix $destination "//") -}}
+{{- /*
+  Leave these links exactly as written:
+  - full URLs (https://…, mailto:…, //…)
+  - links made with a shortcode, e.g. [text]({{< ref "page" >}}). Hugo runs
+    {{< >}} shortcodes after this hook, so here the link is still a
+    placeholder (HAHAHUGOSHORTCODE…) that Hugo swaps for the real URL later.
+*/ -}}
+{{- if or (findRE `^[a-zA-Z][a-zA-Z0-9+.-]*:` $destination) (hasPrefix $destination "//") (hasPrefix $destination "HAHAHUGOSHORTCODE") -}}
     {{- $href = $destination -}}
 {{- else if .Page.Resources.GetMatch $destination -}}
     {{- $href = (.Page.Resources.GetMatch $destination).RelPermalink -}}
