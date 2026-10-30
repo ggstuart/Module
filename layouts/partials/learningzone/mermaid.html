@@ -1,0 +1,13 @@
+{{- /* Download Mermaid once at build time and publish it inside the package. */ -}}
+{{- $url := site.Params.learningzone.mermaidURL | default "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" -}}
+{{- $out := "" -}}
+{{- with try (resources.GetRemote $url) -}}
+  {{- if .Err -}}
+    {{- warnf "Learning Zone: could not download Mermaid (%s). Diagrams will show as text. %s" $url .Err -}}
+  {{- else if .Value -}}
+    {{- $out = (resources.Copy "learningzone/js/mermaid.min.js" .Value).RelPermalink -}}
+  {{- else -}}
+    {{- warnf "Learning Zone: could not download Mermaid (%s). Diagrams will show as text." $url -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

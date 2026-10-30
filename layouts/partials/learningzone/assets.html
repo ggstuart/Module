@@ -1,0 +1,25 @@
+{{- /*
+  Builds (once per build) the extra files a Learning Zone page needs and
+  returns their paths:
+    style  the theme's style.css without its Google Fonts @import
+    fonts  local copy of the web fonts ("" if unavailable), fontFiles its files
+    css    learningzone.css (iframe-friendly tweaks)
+    js     learningzone.js  (slide controls, focus, copy fallback)
+*/ -}}
+{{- $styleSrc := "" -}}
+{{- if fileExists "static/css/style.css" -}}
+  {{- $styleSrc = readFile "static/css/style.css" -}}
+{{- else -}}
+  {{- with resources.Get "_lz/theme-static/css/style.css" }}{{ $styleSrc = .Content }}{{ end -}}
+{{- end -}}
+{{- $styleSrc = replaceRE `@import\s+url\(\s*['"]?https?://fonts\.googleapis\.com[^)]*\)\s*;?` "/* web fonts are bundled by the Learning Zone export */" $styleSrc -}}
+{{- /* Same folder as the original, so its relative url(../images/...) still work. */ -}}
+{{- $style := resources.FromString "css/style.lz.css" $styleSrc -}}
+{{- $fonts := partialCached "learningzone/fonts.html" . "lz-fonts" -}}
+{{- return dict
+    "style" $style.RelPermalink
+    "fonts" $fonts.css
+    "fontFiles" $fonts.files
+    "css" (resources.Get "learningzone/learningzone.css").RelPermalink
+    "js" (resources.Get "learningzone/learningzone.js").RelPermalink
+-}}

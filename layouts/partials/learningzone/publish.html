@@ -1,0 +1,23 @@
+{{- /*
+  Publishes a page's own files (images, HTML examples, CSS...) and returns
+  their package paths. For a lecture it includes the files of its slides.
+*/ -}}
+{{- $files := slice -}}
+{{- $pages := slice . -}}
+{{- range .Params.slides -}}
+  {{- with $.GetPage . -}}{{- $pages = $pages | append . -}}{{- end -}}
+{{- end -}}
+{{- range $pages -}}
+  {{- range .Resources -}}
+    {{- if ne .ResourceType "page" -}}
+      {{- $files = $files | append (strings.TrimPrefix "/" .RelPermalink) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- /* HTML examples kept as content files, published as-is (see lecture/single.html). */ -}}
+  {{- range .Resources.Match "**.html" -}}
+    {{- if eq .ResourceType "page" -}}
+      {{- $files = $files | append (strings.TrimPrefix "/" (.Content | resources.FromString .Path).RelPermalink) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $files -}}

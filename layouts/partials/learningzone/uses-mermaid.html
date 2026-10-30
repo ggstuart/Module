@@ -1,0 +1,10 @@
+{{- /* Does this page (or any slide in this lecture) contain a mermaid diagram? */ -}}
+{{- $uses := or .Params.mermaid (strings.Contains .RawContent "```mermaid") -}}
+{{- if not $uses -}}
+  {{- range .Params.slides -}}
+    {{- with $.GetPage . -}}
+      {{- if strings.Contains .RawContent "```mermaid" -}}{{- $uses = true -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $uses -}}

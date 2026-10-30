@@ -1,0 +1,9 @@
+{{- /* Path of a page's Learning Zone file, relative to the package root. */ -}}
+{{- $href := "" -}}
+{{- with .OutputFormats.Get "lz" -}}
+  {{- $href = strings.TrimPrefix "/" .RelPermalink -}}
+  {{- if or (eq $href "") (strings.HasSuffix $href "/") -}}
+    {{- $href = printf "%sindex.html" $href -}}
+  {{- end -}}
+{{- end -}}
+{{- return $href -}}

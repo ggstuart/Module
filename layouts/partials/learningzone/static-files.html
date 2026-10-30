@@ -1,0 +1,13 @@
+{{- /* Every file below a folder of the site's own static directory, recursively. */ -}}
+{{- $files := slice -}}
+{{- if fileExists . -}}
+  {{- range os.ReadDir . -}}
+    {{- $p := path.Join $ .Name -}}
+    {{- if .IsDir -}}
+      {{- $files = $files | append (partial "learningzone/static-files.html" $p) -}}
+    {{- else -}}
+      {{- $files = $files | append $p -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $files -}}

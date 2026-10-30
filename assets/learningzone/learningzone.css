@@ -1,0 +1,80 @@
+/*
+  Learning Zone export: small adjustments so theme pages sit nicely inside
+  a Learning Zone (Brightspace) content frame. Loaded after all other CSS,
+  only in packages built with `--environment learningzone`.
+*/
+@layer learningzone {
+    html.learningzone body {
+        min-height: 0;
+    }
+    html.learningzone body > main {
+        margin-block: 1rem;
+    }
+
+    /* Learning Zone has its own previous/next topic buttons. */
+    html.learningzone nav.pagination {
+        display: none;
+    }
+    html.learningzone body > footer:empty,
+    html.learningzone body > footer:not(:has(*)) {
+        display: none;
+    }
+
+    /* Slide decks.
+       The deck needs a real height even when Learning Zone sizes the frame to
+       fit its content, so it is never shorter than a 16:10 box. */
+    html.learningzone body.presentation {
+        height: max(100dvh, min(62.5vw, 900px));
+        min-height: 360px;
+        grid-template-rows: 1fr auto;
+    }
+    html.learningzone body.presentation > main {
+        margin: 0;
+    }
+    html.learningzone body.presentation > footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1rem;
+    }
+    html.learningzone body.presentation #slide-progress {
+        flex: 1 0 100%;
+    }
+    html.learningzone body.presentation #instructions {
+        flex: 1;
+    }
+    .lz-slide-controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-left: auto;
+    }
+    .lz-slide-controls button {
+        font: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        padding: 0.35em 0.9em;
+        border-radius: 999px;
+        border: 1px solid hsl(0 0% 100% / 0.35);
+        background: hsl(0 0% 100% / 0.1);
+        color: inherit;
+    }
+    .lz-slide-controls button:hover,
+    .lz-slide-controls button:focus-visible {
+        background: hsl(0 0% 100% / 0.25);
+    }
+    .lz-slide-controls .lz-counter {
+        align-self: center;
+        font-variant-numeric: tabular-nums;
+        min-width: 4.5em;
+        text-align: center;
+    }
+    body.presentation:fullscreen,
+    body.presentation:fullscreen > main {
+        height: 100dvh;
+    }
+
+    /* Feedback for the exercise "copy to clipboard" buttons. */
+    button.copy-to-clipboard.lz-copied::after {
+        content: " \2713";
+    }
+}

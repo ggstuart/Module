@@ -1,0 +1,5 @@
+{{- /* Should this page appear as a topic or folder in Learning Zone? */ -}}
+{{- $p := . -}}
+{{- $ok := and (not $p.Params.learningzone.exclude) (ne $p.Type "slide") (ne $p.Type "slides") -}}
+{{- if $ok -}}{{- $ok = ne (partial "learningzone/href.html" $p) "" -}}{{- end -}}
+{{- return $ok -}}

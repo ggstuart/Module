@@ -1,0 +1,40 @@
+{{- /*
+  Download the theme's Google Fonts once at build time, publish the font files
+  inside the package. Returns the path of a local fonts.css (css) and of the
+  font files (files); css is "" (pages fall back to system fonts) if the download fails.
+*/ -}}
+{{- $out := "" -}}
+{{- $files := slice -}}
+{{- $url := site.Params.learningzone.fontsURL -}}
+{{- if and $url (ne site.Params.learningzone.bundleFonts false) -}}
+  {{- $opts := dict "headers" (dict "User-Agent" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36") -}}
+  {{- with try (resources.GetRemote $url $opts) -}}
+    {{- if .Err -}}
+      {{- warnf "Learning Zone: could not download fonts (%s). Pages will use system fonts. %s" $url .Err -}}
+    {{- else if not .Value -}}
+      {{- warnf "Learning Zone: could not download fonts (%s). Pages will use system fonts." $url -}}
+    {{- else -}}
+      {{- $css := .Value.Content -}}
+      {{- $ok := true -}}
+      {{- range $i, $m := findRESubmatch `url\((https://[^)]+)\)` $css -}}
+        {{- $fontURL := index $m 1 -}}
+        {{- with try (resources.GetRemote $fontURL) -}}
+          {{- with .Value -}}
+            {{- $name := printf "f%03d%s" $i (path.Ext $fontURL) -}}
+            {{- $font := resources.Copy (printf "learningzone/fonts/%s" $name) . -}}
+            {{- $files = $files | append $font.RelPermalink -}}
+            {{- $css = replace $css $fontURL $name -}}
+          {{- else -}}
+            {{- $ok = false -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $ok -}}
+        {{- $out = (resources.FromString "learningzone/fonts/fonts.css" $css).RelPermalink -}}
+      {{- else -}}
+        {{- warnf "Learning Zone: some font files could not be downloaded. Pages will use system fonts." -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return dict "css" $out "files" (cond (eq $out "") slice $files) -}}

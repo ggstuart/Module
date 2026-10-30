@@ -1,0 +1,27 @@
+{{- /*
+  One <item> of the manifest organization.
+  A section becomes a folder holding its own page (if it has content) and its
+  children in weight order. Any other page becomes a topic.
+*/ -}}
+{{- $p := .page -}}
+{{- $indent := .indent -}}
+{{- $href := partial "learningzone/href.html" $p -}}
+{{- if $p.IsSection }}
+{{ $indent }}<item identifier="{{ partial "learningzone/id.html" (dict "prefix" "FOLDER" "path" $href) }}">
+{{ $indent }}  <title>{{ $p.LinkTitle | htmlEscape }}</title>
+{{- if (trim (string $p.RawContent) " \n\r\t") }}
+{{ $indent }}  <item identifier="{{ partial "learningzone/id.html" (dict "prefix" "ITEM" "path" $href) }}" identifierref="{{ partial "learningzone/id.html" (dict "prefix" "RES" "path" $href) }}">
+{{ $indent }}    <title>{{ $p.Params.learningzone.title | default (site.Params.learningzone.sectionPageTitle | default "Overview") | htmlEscape }}</title>
+{{ $indent }}  </item>
+{{- end }}
+{{- range $p.Pages }}
+{{- if partial "learningzone/included.html" . }}
+{{- partial "learningzone/item.html" (dict "page" . "indent" (printf "%s  " $indent)) }}
+{{- end }}
+{{- end }}
+{{ $indent }}</item>
+{{- else }}
+{{ $indent }}<item identifier="{{ partial "learningzone/id.html" (dict "prefix" "ITEM" "path" $href) }}" identifierref="{{ partial "learningzone/id.html" (dict "prefix" "RES" "path" $href) }}">
+{{ $indent }}  <title>{{ $p.Params.learningzone.title | default $p.LinkTitle | htmlEscape }}</title>
+{{ $indent }}</item>
+{{- end -}}
