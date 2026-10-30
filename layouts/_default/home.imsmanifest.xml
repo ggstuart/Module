@@ -76,7 +76,7 @@
       <item identifier="ROOT">
         <title>{{ $title | htmlEscape }}</title>
 {{- if and (ne $lzp.includeHome false) (partial "learningzone/href.html" site.Home) }}
-        <item identifier="ITEM_home" identifierref="{{ partial "learningzone/id.html" (dict "prefix" "RES" "path" (partial "learningzone/href.html" site.Home)) }}">
+        <item identifier="{{ partial "learningzone/id.html" (dict "prefix" "ITEM" "path" "home") }}" identifierref="{{ partial "learningzone/id.html" (dict "prefix" "RES" "path" (partial "learningzone/href.html" site.Home)) }}">
           <title>{{ $lzp.homeTitle | default "About this module" | htmlEscape }}</title>
         </item>
 {{- end }}

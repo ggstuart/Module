@@ -26,7 +26,8 @@ been tested with Learning Zone.
 - Pages are shown without the site header, menu, breadcrumbs and footer,
   because Learning Zone has its own navigation.
 - Everything the pages need (CSS, JavaScript, images, HTML examples, the web
-  fonts and, if a page uses it, Mermaid) is inside the zip.
+  fonts and, if a page uses it, Mermaid) is inside the zip. Static files and
+  assets that no page uses are left out, to keep the zip small.
 
 The export is opt-in. A normal `hugo` build is not affected.
 
@@ -49,7 +50,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           submodules: recursive
-      - uses: ggstuart/Module/.github/actions/learning-zone@2026-27
+      - uses: ggstuart/Module/.github/actions/learning-zone@2026-27   # see "Pinning the action" below
 ```
 
 Each run puts `course-package.zip` on the run's summary page (under
@@ -64,10 +65,33 @@ Optional inputs:
 | `package-name` | `course-package.zip` | name of the zip |
 | `release-tag` | | also attach the zip to this existing release (needs `permissions: contents: write`) |
 | `upload-artifact` | `true` | upload the zip as a workflow artifact |
+| `offline` | `false` | `true` = don't download the web fonts and Mermaid (system fonts, diagrams shown as text) |
+| `keep-unused-files` | `false` | `true` = keep every static file and asset, even those no page uses |
+| `home-outputs` | `["lz", "slideLayouts", "imsmanifest"]` | the home page outputs for the package build |
+
+#### Pinning the action
+
+`@2026-27` follows the theme's branch, so a change to the theme can change
+the next package without any change in your repository. To make the build
+repeatable, pin the action to a release tag or a full commit SHA instead,
+and use the same version as the theme submodule your site uses (the action
+and the templates are made to work together):
+
+```yaml
+      - uses: ggstuart/Module/.github/actions/learning-zone@v2026.1        # a release tag (example name)
+      - uses: ggstuart/Module/.github/actions/learning-zone@3f1c9e2...     # or a commit SHA
+```
+
+`git -C themes/module rev-parse HEAD` prints the commit your submodule is on.
+When you update the submodule, update the version here too. (Dependabot can
+open pull requests for both: use the `gitsubmodule` and `github-actions`
+ecosystems.)
 
 The action also checks the package: it fails if the manifest names a file
 that is missing, warns about links that would break, and lists the websites
-the pages still load from the internet (YouTube embeds, for example).
+the pages still load from the internet (YouTube embeds, for example). It also
+fails if the web fonts or Mermaid can't be downloaded, rather than quietly
+making a package without them; set `offline: true` to build without them.
 
 ### Build it on your own computer
 
@@ -75,9 +99,15 @@ The simplest way, in a terminal (on Windows, *Git Bash*) in the site's folder,
 is the same script the GitHub Action uses:
 
 ```sh
-bash themes/module/.github/actions/learning-zone/build.sh course-package
-cd course-package && zip -r ../course-package.zip . && cd ..
+bash themes/module/.github/actions/learning-zone/build.sh course-package course-package.zip
 ```
+
+This builds the package into the folder `course-package`, removes unused
+files, checks it, and zips the folder's contents into `course-package.zip`
+(with `imsmanifest.xml` at the top of the zip, as Learning Zone needs). It
+needs bash, Hugo (extended) and Python 3; without Python the package is not
+made smaller or checked. `LZ_OFFLINE=true bash ...` builds without
+downloading the fonts and Mermaid, and `LZ_PRUNE=false` keeps every file.
 
 Or, to use plain Hugo commands, add a file `config/learningzone/hugo.toml`
 to the site (next to `content/`):
@@ -91,6 +121,10 @@ disableKinds = ["taxonomy", "term", "rss", "sitemap", "robotsTXT", "404"]
 # Only needed if your hugo.toml sets [outputs] home = [...] itself:
 [outputs]
   home = ["lz", "slideLayouts", "imsmanifest"]
+
+# Allow the downloads the package needs (web fonts and Mermaid).
+[security.http]
+  urls = ['^https://fonts\.googleapis\.com/', '^https://fonts\.gstatic\.com/', '^https://cdn\.jsdelivr\.net/npm/mermaid@']
 ```
 
 (A site whose `hugo.toml` has `[outputs] _merge = 'deep'` and no `home`
@@ -107,9 +141,13 @@ cd course-package && zip -r ../course-package.zip . && cd ..
 On Windows (PowerShell) the zip step is
 `Compress-Archive -Path course-package\* -DestinationPath course-package.zip`.
 
+This plain Hugo build includes every static file and asset (it works, but the
+zip is bigger than the script's).
+
 `hugo server --environment learningzone` previews the package version of the
 pages. The build needs internet access the first time, to download the web
-fonts (and Mermaid). Without it the package still builds, with system fonts.
+fonts (and Mermaid), and fails if it can't. To build without them, set
+`offline = true` under `[params.learningzone]`.
 
 ### Import it into Learning Zone
 
@@ -134,7 +172,11 @@ In the site's `hugo.toml`:
   homeTitle = "About this module"
   sectionPageTitle = "Overview"   # title of each unit's own page
   sectionType = "unit"        # "" = every top-level section, not only units
-  bundleFonts = true          # put the web fonts inside the package
+  offline = false             # true = don't download web fonts or Mermaid
+  mermaidURL = "https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js"
+
+The web fonts come from the `@import` of Google Fonts at the top of the
+theme's `static/css/style.css`, so there is only one place to change them.
 ```
 
 In a page's front matter:
@@ -158,9 +200,13 @@ All of it is in files used only by `hugo --environment learningzone`:
   section tree, and the `imscc.xml` marker file.
 - `layouts/partials/learningzone/` holds the helpers, and
   `assets/learningzone/` the extra CSS and JavaScript for pages inside a frame.
-- `.github/actions/learning-zone/` is the GitHub Action.
+- `.github/actions/learning-zone/` is the GitHub Action: `build.sh` (build,
+  then `prune_package.py` to drop unused files, then `check_package.py`, then
+  zip) and `action.yml`.
 
 Known limits: links to pages on the live website, YouTube embeds and images
 hot-linked from other sites still need internet access. Links between pages
 that point at a folder (`../hello-world/`) are fixed up by a small script in
-the page, so they need JavaScript.
+the page, so they need JavaScript. Links written as `//unit/page/` (a site
+link a template has turned into `//...`) don't work in Learning Zone; the
+check lists them.

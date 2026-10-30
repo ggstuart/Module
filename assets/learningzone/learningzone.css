@@ -62,19 +62,9 @@
     .lz-slide-controls button:focus-visible {
         background: hsl(0 0% 100% / 0.25);
     }
-    .lz-slide-controls .lz-counter {
-        align-self: center;
-        font-variant-numeric: tabular-nums;
-        min-width: 4.5em;
-        text-align: center;
-    }
     body.presentation:fullscreen,
     body.presentation:fullscreen > main {
         height: 100dvh;
     }
 
-    /* Feedback for the exercise "copy to clipboard" buttons. */
-    button.copy-to-clipboard.lz-copied::after {
-        content: " \2713";
-    }
 }

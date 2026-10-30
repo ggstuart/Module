@@ -53,7 +53,6 @@ if unlisted:
 # references inside html/css
 attr = re.compile(r'''(?:href|src|poster|data|action)\s*=\s*["']([^"']*)["']|url\(\s*["']?([^"')]+)["']?\s*\)|@import\s+["']([^"']+)["']''', re.I)
 rootabs, external, broken = [], {}, []
-fixed_by_js = 0
 for f in sorted(allfiles):
     if not f.endswith((".html", ".css", ".js")) or f.startswith("learningzone/js/mermaid"): continue
     text = open(os.path.join(root, f), encoding="utf-8", errors="replace").read()
@@ -64,9 +63,8 @@ for f in sorted(allfiles):
         u = next(g for g in mm.groups() if g is not None).strip()
         if not u or u.startswith(("#", "data:", "mailto:", "javascript:", "tel:", "about:")) or "{{" in u: continue
         if re.match(r"//[^/.:?#]+(/|$)", u) and not u.startswith("//localhost"):
-            # "//unit/page/": a site-root link mangled by a template; learningzone.js repairs <a> links
-            if mm.group(0).lower().startswith("href"): fixed_by_js += 1
-            else: rootabs.append((f, u))
+            # "//unit/page/": a site-root link mangled by a template
+            rootabs.append((f, u))
             continue
         if u.startswith("//"): u = "https:" + u
         if re.match(r"https?://", u, re.I):
@@ -82,8 +80,6 @@ for f in sorted(allfiles):
             target = os.path.join(target, "index.html")
         if not os.path.exists(os.path.join(root, target)):
             broken.append((f, u))
-if fixed_by_js:
-    print(f"{fixed_by_js} links start with '//' (a site-root link); learningzone.js repairs these in the browser")
 if rootabs:
     warn(f"{len(rootabs)} references start at the site root and will not work in Learning Zone: {rootabs[:10]}")
 if broken:

@@ -5,7 +5,8 @@
 {{- $files := slice -}}
 {{- $pages := slice . -}}
 {{- range .Params.slides -}}
-  {{- with $.GetPage . -}}{{- $pages = $pages | append . -}}{{- end -}}
+  {{- /* TODO: use partial "find-slide.html" (dict "lecture" $ "ref" .) once Module PR #2 is merged. */ -}}
+  {{- with site.GetPage . -}}{{- $pages = $pages | append . -}}{{- end -}}
 {{- end -}}
 {{- range $pages -}}
   {{- range .Resources -}}

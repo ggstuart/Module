@@ -1,2 +1,6 @@
-{{- /* A manifest identifier made from a prefix and a path. */ -}}
-{{- return printf "%s_%s" .prefix (replaceRE `[^A-Za-z0-9]+` "_" .path | strings.TrimSuffix "_") -}}
+{{- /*
+  A manifest identifier made from a prefix and a path, e.g. RES_unit_page_index_html_3f2a9c.
+  The short hash keeps paths like "a-b" and "a_b" apart.
+*/ -}}
+{{- $readable := replaceRE `[^A-Za-z0-9]+` "_" .path | strings.TrimSuffix "_" -}}
+{{- return printf "%s_%s_%s" .prefix $readable (substr (md5 .path) 0 6) -}}

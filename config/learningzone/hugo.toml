@@ -40,27 +40,39 @@
   # `type: unit` (sorted by weight). Set to "" to include every section that has pages.
   sectionType = "unit"
 
-  # Download web fonts and Mermaid at build time and put them in the package,
-  # so nothing is loaded from the internet inside Learning Zone.
-  bundleFonts = true
-  fontsURL = "https://fonts.googleapis.com/css2?family=Ubuntu+Mono&family=Ubuntu:wght@300;400;500;700&family=Rokkitt:wght@100;300;400;500;600&display=swap"
+  # The web fonts (named by the @import in style.css) and, if a page uses it,
+  # Mermaid are downloaded at build time and put in the package, so nothing
+  # is loaded from the internet inside Learning Zone. A failed download stops
+  # the build. Set offline = true to skip the downloads: pages then use
+  # system fonts and diagrams show as text.
+  offline = false
   mermaidURL = "https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js"
 
-# Hugo replaces a theme's default mounts when it declares any, so the
-# standard ones are repeated here. The extra mount makes the theme's static
-# files visible to templates, so the manifest can list them.
+# Hugo replaces a theme's default mounts when it declares any, so all the
+# standard ones are repeated here (folders the theme doesn't have are
+# ignored). The last one makes the theme's static files visible to
+# templates, so the manifest can list them.
 [[module.mounts]]
-  source = "archetypes"
-  target = "archetypes"
+  source = "content"
+  target = "content"
+[[module.mounts]]
+  source = "data"
+  target = "data"
 [[module.mounts]]
   source = "layouts"
   target = "layouts"
 [[module.mounts]]
-  source = "static"
-  target = "static"
+  source = "i18n"
+  target = "i18n"
+[[module.mounts]]
+  source = "archetypes"
+  target = "archetypes"
 [[module.mounts]]
   source = "assets"
   target = "assets"
+[[module.mounts]]
+  source = "static"
+  target = "static"
 [[module.mounts]]
   source = "static"
   target = "assets/_lz/theme-static"

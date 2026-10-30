@@ -19,6 +19,16 @@ inputs:
       Output formats for the home page in the package build, as a JSON list.
       Only change this if you have added your own home outputs that must be in the package.
     default: '["lz", "slideLayouts", "imsmanifest"]'
+  offline:
+    description: >
+      "true" builds without downloading the web fonts and Mermaid (pages use
+      system fonts, diagrams show as text). By default a failed download fails the build.
+    default: "false"
+  keep-unused-files:
+    description: >
+      "true" keeps every static file and asset of the site in the package. By
+      default only the files the Learning Zone topics actually use are kept.
+    default: "false"
   upload-artifact:
     description: Upload the zip as a workflow artifact ("true" or "false").
     default: "true"
@@ -53,32 +63,19 @@ runs:
         fi
         hugo version
 
-    - name: Build the Learning Zone version of the site
+    - name: Build, check and zip the package
+      id: zip
       shell: bash
       working-directory: ${{ inputs.site-directory }}
       env:
         HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
-        HOME_OUTPUTS: ${{ inputs.home-outputs }}
-      run: |
-        out="${RUNNER_TEMP}/learning-zone-package"
-        bash "${{ github.action_path }}/build.sh" "$out" "$HOME_OUTPUTS"
-        echo "LZ_PACKAGE_DIR=$out" >> "$GITHUB_ENV"
-
-    - name: Check the package
-      shell: bash
-      run: python3 "${{ github.action_path }}/check_package.py" "$LZ_PACKAGE_DIR"
-
-    - name: Zip the package
-      id: zip
-      shell: bash
-      env:
+        LZ_HOME_OUTPUTS: ${{ inputs.home-outputs }}
+        LZ_OFFLINE: ${{ inputs.offline }}
+        LZ_PRUNE: ${{ inputs.keep-unused-files == 'true' && 'false' || 'true' }}
         PACKAGE_NAME: ${{ inputs.package-name }}
       run: |
         zip_path="${GITHUB_WORKSPACE}/${PACKAGE_NAME}"
-        rm -f "$zip_path"
-        # Zip the folder's contents, so imsmanifest.xml sits at the root of the zip.
-        (cd "$LZ_PACKAGE_DIR" && zip -q -r -X "$zip_path" .)
-        ls -l "$zip_path"
+        bash "${{ github.action_path }}/build.sh" "${RUNNER_TEMP}/learning-zone-package" "$zip_path"
         echo "package=$zip_path" >> "$GITHUB_OUTPUT"
         {
           echo "### Learning Zone package"

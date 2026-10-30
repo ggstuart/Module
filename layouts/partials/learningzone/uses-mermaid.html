@@ -2,7 +2,8 @@
 {{- $uses := or .Params.mermaid (strings.Contains .RawContent "```mermaid") -}}
 {{- if not $uses -}}
   {{- range .Params.slides -}}
-    {{- with $.GetPage . -}}
+    {{- /* TODO: use partial "find-slide.html" (dict "lecture" $ "ref" .) once Module PR #2 is merged. */ -}}
+    {{- with site.GetPage . -}}
       {{- if strings.Contains .RawContent "```mermaid" -}}{{- $uses = true -}}{{- end -}}
     {{- end -}}
   {{- end -}}

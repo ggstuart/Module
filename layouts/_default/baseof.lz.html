@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="{{ .RelPermalink }}">
     {{- end }}
     <link rel="stylesheet" href="{{ $lz.css }}">
+    {{- if partial "learningzone/uses-mermaid.html" . }}
+    {{- with partialCached "learningzone/mermaid.html" . "lz-mermaid" }}
+    <script src="{{ . }}" defer></script>
+    {{- end }}
+    {{- end }}
     <script src="{{ $lz.js }}" defer></script>
     {{- if eq .Type "lecture" }}
     <script src="{{ "js/presentation.js" | relURL }}" type="module"></script>
@@ -39,13 +44,5 @@
     <footer>
         {{ block "footer" . }}{{ end }}
     </footer>
-    {{- if partial "learningzone/uses-mermaid.html" . }}
-    {{- with partialCached "learningzone/mermaid.html" . "lz-mermaid" }}
-    <script src="{{ . }}"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, er: { layoutDirection: 'LR', fontSize: '1em' }, theme: 'base' });
-    </script>
-    {{- end }}
-    {{- end }}
 </body>
 </html>
