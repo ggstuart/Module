@@ -3,7 +3,9 @@
 
 Fails if imsmanifest.xml is not well-formed or names a file that is missing.
 Prints GitHub warnings for files the manifest does not list, references that
-still start at the site root, and broken relative links, and lists the
+still start at the site root, broken relative links, and iframes or links on
+other pages that lead to the package's home page (usually a path the theme
+could not resolve, so it fell back to the site's root), and lists the
 external websites the pages load or link to.
 
 Usage: check_package.py PACKAGE_DIR
@@ -52,7 +54,7 @@ if unlisted:
     warn(f"{len(unlisted)} files are in the package but not in imsmanifest.xml: {unlisted[:20]}")
 # references inside html/css
 attr = re.compile(r'''(?:href|src|poster|data|action)\s*=\s*["']([^"']*)["']|url\(\s*["']?([^"')]+)["']?\s*\)|@import\s+["']([^"']+)["']''', re.I)
-rootabs, external, broken = [], {}, []
+rootabs, external, broken, to_home = [], {}, [], []
 for f in sorted(allfiles):
     if not f.endswith((".html", ".css", ".js")) or f.startswith("learningzone/js/mermaid"): continue
     text = open(os.path.join(root, f), encoding="utf-8", errors="replace").read()
@@ -77,13 +79,25 @@ for f in sorted(allfiles):
         if not p: continue
         target = os.path.normpath(os.path.join(os.path.dirname(f), unquote(p)))
         if os.path.isdir(os.path.join(root, target)):
-            target = os.path.join(target, "index.html")
+            target = os.path.normpath(os.path.join(target, "index.html"))
         if not os.path.exists(os.path.join(root, target)):
             broken.append((f, u))
+        elif target == "index.html" and f != "index.html" and f.endswith(".html"):
+            # An iframe or link that lands on the home page from another page is
+            # nearly always a path the theme couldn't resolve and replaced with
+            # the site root (an iframe src next to the page, a "../" link...).
+            tag = re.match(r"<\s*([a-z0-9]+)", text[text.rfind("<", 0, mm.start()):], re.I)
+            tag = tag.group(1).lower() if tag else "?"
+            if tag in ("iframe", "a", "img", "embed", "object", "source", "video", "audio"):
+                to_home.append((f, tag, u))
 if rootabs:
     warn(f"{len(rootabs)} references start at the site root and will not work in Learning Zone: {rootabs[:10]}")
 if broken:
     warn(f"{len(broken)} relative links or files could not be found in the package (first ones: {broken[:10]})")
+if to_home:
+    frames = [x for x in to_home if x[1] != "a"]
+    warn(f"{len(to_home)} references on other pages lead to the home page ({len(frames)} of them iframes or media), "
+         f"which usually means a path that couldn't be resolved: {to_home[:10]}")
 print("websites referenced from the pages (these need internet access in Learning Zone):")
 for h, fs in sorted(external.items(), key=lambda x: (-len(x[1]), x[0])):
     print(f"   {h}: {len(fs)} file(s)")
