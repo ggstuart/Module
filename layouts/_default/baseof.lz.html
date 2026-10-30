@@ -1,0 +1,48 @@
+{{- /*
+  Learning Zone page shell, used only by `hugo --environment learningzone`.
+  Learning Zone shows each page in an iframe with its own navigation, so the
+  site header, menu, breadcrumbs and theme footer are left out. Page content,
+  slide decks and exercise features are kept.
+*/ -}}
+{{- $lz := partialCached "learningzone/assets.html" . "lz-assets" -}}
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale }}" class="learningzone">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}{{ with site.Params.ModuleCode }} &ndash; {{ . }}{{ end }}</title>
+    <link rel="icon" href="{{ "images/module-logo.svg" | relURL }}" type="image/svg+xml">
+    {{- with $lz.fonts }}
+    <link rel="stylesheet" href="{{ . }}">
+    {{- end }}
+    <link rel="stylesheet" href="{{ "css/onedark.css" | relURL }}">
+    <link rel="stylesheet" href="{{ $lz.style }}">
+    {{ block "css" . }}{{ end }}
+    {{- range site.Params.customcss }}
+    <link rel="stylesheet" href="{{ . | relURL }}">
+    {{- end }}
+    {{- range .Resources.Match "*.css" }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+    {{- end }}
+    <link rel="stylesheet" href="{{ $lz.css }}">
+    {{- if partial "learningzone/uses-mermaid.html" . }}
+    {{- with partialCached "learningzone/mermaid.html" . "lz-mermaid" }}
+    <script src="{{ . }}" defer></script>
+    {{- end }}
+    {{- end }}
+    <script src="{{ $lz.js }}" defer></script>
+    {{- if eq .Type "lecture" }}
+    <script src="{{ "js/presentation.js" | relURL }}" type="module"></script>
+    {{- else if eq .Type "exercise" }}
+    <script src="{{ "js/exercise.js" | relURL }}" type="module"></script>
+    {{- end }}
+</head>
+<body{{ block "bodyAttributes" . }}{{ end }}>
+    <main{{ if .Draft }} class="draft"{{ end }}>
+        {{ block "main" . }}{{ end }}
+    </main>
+    <footer>
+        {{ block "footer" . }}{{ end }}
+    </footer>
+</body>
+</html>

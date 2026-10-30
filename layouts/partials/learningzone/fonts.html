@@ -1,0 +1,39 @@
+{{- /*
+  Download web fonts once at build time and publish them inside the package.
+  Called with the Google Fonts CSS URL found in the theme's style.css (its
+  @import), so that file stays the only place the fonts are named.
+  Returns the path of a local fonts.css (css) and of the font files (files).
+  A failed download stops the build, unless params.learningzone.offline is
+  true, in which case nothing is downloaded and pages use system fonts.
+*/ -}}
+{{- $url := . -}}
+{{- $out := "" -}}
+{{- $files := slice -}}
+{{- if and $url (not site.Params.learningzone.offline) -}}
+  {{- $hint := "Check the internet connection, or build with the learningzone `offline` option (pages then use system fonts)." -}}
+  {{- $opts := dict "headers" (dict "User-Agent" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36") -}}
+  {{- with try (resources.GetRemote $url $opts) -}}
+    {{- if .Err -}}
+      {{- errorf "Learning Zone: could not download the web fonts from %s. %s\n%s" $url $hint .Err -}}
+    {{- else if not .Value -}}
+      {{- errorf "Learning Zone: could not download the web fonts from %s. %s" $url $hint -}}
+    {{- else -}}
+      {{- $css := .Value.Content -}}
+      {{- range $i, $m := findRESubmatch `url\((https://[^)]+)\)` $css -}}
+        {{- $fontURL := index $m 1 -}}
+        {{- with try (resources.GetRemote $fontURL) -}}
+          {{- if .Value -}}
+            {{- $name := printf "f%03d%s" $i (path.Ext $fontURL) -}}
+            {{- $font := resources.Copy (printf "learningzone/fonts/%s" $name) .Value -}}
+            {{- $files = $files | append $font.RelPermalink -}}
+            {{- $css = replace $css $fontURL $name -}}
+          {{- else -}}
+            {{- errorf "Learning Zone: could not download the font file %s. %s %s" $fontURL $hint (.Err | default "") -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $out = (resources.FromString "learningzone/fonts/fonts.css" $css).RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return dict "css" $out "files" $files -}}

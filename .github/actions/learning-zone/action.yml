@@ -1,0 +1,102 @@
+name: Learning Zone course package
+description: >
+  Build a Hugo site that uses the Module theme as an IMS Common Cartridge
+  package (course-package.zip) for import into DMU Learning Zone (Brightspace).
+author: Graeme Stuart
+
+inputs:
+  hugo-version:
+    description: Hugo version to install (extended edition). Leave empty to use a Hugo already on the PATH.
+    default: "0.169.0"
+  site-directory:
+    description: Folder of the Hugo site, relative to the repository root.
+    default: "."
+  package-name:
+    description: File name of the zip to create, relative to the repository root.
+    default: course-package.zip
+  home-outputs:
+    description: >
+      Output formats for the home page in the package build, as a JSON list.
+      Only change this if you have added your own home outputs that must be in the package.
+    default: '["lz", "slideLayouts", "imsmanifest"]'
+  offline:
+    description: >
+      "true" builds without downloading the web fonts and Mermaid (pages use
+      system fonts, diagrams show as text). By default a failed download fails the build.
+    default: "false"
+  keep-unused-files:
+    description: >
+      "true" keeps every static file and asset of the site in the package. By
+      default only the files the Learning Zone topics actually use are kept.
+    default: "false"
+  upload-artifact:
+    description: Upload the zip as a workflow artifact ("true" or "false").
+    default: "true"
+  release-tag:
+    description: >
+      If set, also attach the zip to the GitHub release with this tag (it must
+      already exist). Needs `permissions: contents: write`.
+    default: ""
+  github-token:
+    description: Token used to attach the zip to a release.
+    default: ${{ github.token }}
+
+outputs:
+  package:
+    description: Path of the zip file.
+    value: ${{ steps.zip.outputs.package }}
+
+runs:
+  using: composite
+  steps:
+    - name: Install Hugo
+      if: inputs.hugo-version != ''
+      shell: bash
+      env:
+        HUGO_VERSION: ${{ inputs.hugo-version }}
+      run: |
+        if command -v hugo >/dev/null && hugo version | grep -q "v${HUGO_VERSION}-.*extended"; then
+          echo "Hugo ${HUGO_VERSION} is already installed"
+        else
+          wget -q -O "${RUNNER_TEMP}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "${RUNNER_TEMP}/hugo.deb" >/dev/null
+        fi
+        hugo version
+
+    - name: Build, check and zip the package
+      id: zip
+      shell: bash
+      working-directory: ${{ inputs.site-directory }}
+      env:
+        HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+        LZ_HOME_OUTPUTS: ${{ inputs.home-outputs }}
+        LZ_OFFLINE: ${{ inputs.offline }}
+        LZ_PRUNE: ${{ inputs.keep-unused-files == 'true' && 'false' || 'true' }}
+        PACKAGE_NAME: ${{ inputs.package-name }}
+      run: |
+        zip_path="${GITHUB_WORKSPACE}/${PACKAGE_NAME}"
+        bash "${{ github.action_path }}/build.sh" "${RUNNER_TEMP}/learning-zone-package" "$zip_path"
+        echo "package=$zip_path" >> "$GITHUB_OUTPUT"
+        {
+          echo "### Learning Zone package"
+          echo ""
+          echo "Built \`${PACKAGE_NAME}\` ($(du -h "$zip_path" | cut -f1))."
+          echo ""
+          echo "To import it: in your Learning Zone module go to **Module Tools > Course Admin > Import/Export/Copy Components**, choose **Import Components** from a course package, upload the zip and press **Import All Components**."
+        } >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Upload the package as an artifact
+      if: inputs.upload-artifact == 'true'
+      uses: actions/upload-artifact@v7
+      with:
+        path: ${{ steps.zip.outputs.package }}
+        # Upload the zip itself, so the download is the package, not a zip of it.
+        archive: false
+
+    - name: Attach the package to a release
+      if: inputs.release-tag != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TAG: ${{ inputs.release-tag }}
+      run: gh release upload "$TAG" "${{ steps.zip.outputs.package }}" --clobber --repo "$GITHUB_REPOSITORY"

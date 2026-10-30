@@ -1,0 +1,108 @@
+{{- /*
+  IMS Common Cartridge 1.1 manifest for Learning Zone (Brightspace).
+  Built only with `hugo --environment learningzone`.
+
+  organization: units (top-level sections) become folders, their pages become
+  topics, in weight order, titled from front matter.
+  resources:    one webcontent resource per page (the page and its own files)
+                and one per shared file (CSS, JS, fonts, images, examples).
+*/ -}}
+{{- $lzp := site.Params.learningzone | default dict -}}
+{{- $title := $lzp.title | default (printf "%s: %s" (site.Params.moduleCode | default "") (site.Params.moduleName | default site.Title) | strings.TrimPrefix ": ") -}}
+
+{{- /* The marker file Brightspace looks for, as in Simon Coupland's MarkdownToLZ. */ -}}
+{{- $marker := `<?xml version="1.0" encoding="UTF-8"?>
+<cartridge_basiclti_link xmlns="http://www.imsglobal.org/xsd/imslticc_v1p0"/>
+` -}}
+{{- $_ := (resources.FromString "imscc.xml" $marker).RelPermalink -}}
+
+{{- /* Top-level folders. */ -}}
+{{- $sectionType := "unit" -}}
+{{- if isset $lzp "sectiontype" }}{{ $sectionType = $lzp.sectionType }}{{ end -}}
+{{- $sections := site.Home.Sections -}}
+{{- with $sectionType }}{{ $sections = where $sections "Type" . }}{{ end -}}
+
+{{- /* Every page rendered into the package, and the files each one owns. */ -}}
+{{- $pages := slice -}}
+{{- $owned := slice -}}
+{{- range site.Pages -}}
+  {{- $href := partial "learningzone/href.html" . -}}
+  {{- if $href -}}
+    {{- $files := partial "learningzone/publish.html" . -}}
+    {{- $pages = $pages | append (dict "href" $href "files" $files) -}}
+    {{- $owned = $owned | append $href | append $files -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Shared files: theme and site static files, site assets, generated CSS. */ -}}
+{{- $shared := slice -}}
+{{- range resources.Match "_lz/theme-static/**" -}}
+  {{- $shared = $shared | append (strings.TrimPrefix "/_lz/theme-static/" .Name) -}}
+{{- end -}}
+{{- range partial "learningzone/static-files.html" "static" -}}
+  {{- $shared = $shared | append (strings.TrimPrefix "static/" .) -}}
+{{- end -}}
+{{- $skip := `^/?(_lz|learningzone)/|\.(scss|sass|ts|tsx|jsx|md)$` -}}
+{{- range resources.Match "**" -}}
+  {{- if not (findRE $skip .Name) -}}
+    {{- $shared = $shared | append (strings.TrimPrefix "/" .RelPermalink) -}}
+  {{- end -}}
+{{- end -}}
+{{- with site.Home.OutputFormats.Get "slideLayouts" -}}
+  {{- $shared = $shared | append (strings.TrimPrefix "/" .RelPermalink) -}}
+{{- end -}}
+{{- $lz := partialCached "learningzone/assets.html" site.Home "lz-assets" -}}
+{{- $shared = $shared | append (strings.TrimPrefix "/" $lz.style) (strings.TrimPrefix "/" $lz.css) (strings.TrimPrefix "/" $lz.js) -}}
+{{- with $lz.fonts -}}
+  {{- $shared = $shared | append (strings.TrimPrefix "/" .) -}}
+{{- end -}}
+{{- range $lz.fontFiles }}{{ $shared = $shared | append (strings.TrimPrefix "/" .) }}{{ end -}}
+{{- $usesMermaid := false -}}
+{{- range site.Pages }}{{ if and (partial "learningzone/href.html" .) (partial "learningzone/uses-mermaid.html" .) }}{{ $usesMermaid = true }}{{ end }}{{ end -}}
+{{- if $usesMermaid -}}
+  {{- with partialCached "learningzone/mermaid.html" site.Home "lz-mermaid" }}{{ $shared = $shared | append (strings.TrimPrefix "/" .) }}{{ end -}}
+{{- end -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="CCPackage"
+  xmlns="http://www.imsglobal.org/xsd/imsccv1p1/imscp_v1p1"
+  version="1.1">
+  <metadata>
+    <schema>IMS Common Cartridge</schema>
+    <schemaversion>1.1.0</schemaversion>
+  </metadata>
+  <organizations default="ORG1">
+    <organization identifier="ORG1">
+      <title>{{ $title | htmlEscape }}</title>
+      <item identifier="ROOT">
+        <title>{{ $title | htmlEscape }}</title>
+{{- if and (ne $lzp.includeHome false) (partial "learningzone/href.html" site.Home) }}
+        <item identifier="{{ partial "learningzone/id.html" (dict "prefix" "ITEM" "path" "home") }}" identifierref="{{ partial "learningzone/id.html" (dict "prefix" "RES" "path" (partial "learningzone/href.html" site.Home)) }}">
+          <title>{{ $lzp.homeTitle | default "About this module" | htmlEscape }}</title>
+        </item>
+{{- end }}
+{{- range $sections }}
+{{- if partial "learningzone/included.html" . }}
+{{- partial "learningzone/item.html" (dict "page" . "indent" "        ") }}
+{{- end }}
+{{- end }}
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+{{- range sort $pages "href" }}
+    <resource identifier="{{ partial "learningzone/id.html" (dict "prefix" "RES" "path" .href) }}" type="webcontent" href="{{ .href }}">
+      <file href="{{ .href }}"/>
+{{- range uniq .files }}
+      <file href="{{ . }}"/>
+{{- end }}
+    </resource>
+{{- end }}
+{{- range sort (uniq $shared) }}
+{{- if not (in $owned .) }}
+    <resource identifier="{{ partial "learningzone/id.html" (dict "prefix" "FILE" "path" .) }}" type="webcontent" href="{{ . }}">
+      <file href="{{ . }}"/>
+    </resource>
+{{- end }}
+{{- end }}
+  </resources>
+</manifest>
