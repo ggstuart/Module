@@ -88,7 +88,8 @@ open pull requests for both: use the `gitsubmodule` and `github-actions`
 ecosystems.)
 
 The action also checks the package: it fails if the manifest names a file
-that is missing, warns about links that would break, and lists the websites
+that is missing, warns about links that would break (including iframes and links that
+land on the home page, the usual sign of a path the theme couldn't resolve), and lists the websites
 the pages still load from the internet (YouTube embeds, for example). It also
 fails if the web fonts or Mermaid can't be downloaded, rather than quietly
 making a package without them; set `offline: true` to build without them.
